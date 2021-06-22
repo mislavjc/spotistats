@@ -1,0 +1,38 @@
+body {
+  font-family: "Inter";
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-weight: 700;
+}
+
+.more-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  & > * {
+    margin: 0 auto;
+  }
+}
+
+@mixin center-width($width) {
+  width: $width;
+  left: calc(50% - #{$width / 2});
+}
+
+
+.center {
+  position: fixed;
+  top: 20vh;
+  @include center-width(500px);
+  z-index: 10;
+}
