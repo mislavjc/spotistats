@@ -11,6 +11,7 @@ import Divider from "@material-ui/core/Divider"
 import Typography from "@material-ui/core/Typography"
 import { AnimateSharedLayout, AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router"
+import Image from "next/image"
 
 const cardVariants = {
   hidden: {
@@ -57,10 +58,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function TopTracks({ album }) {
-  const router = useRouter()
-
-  console.log(album)
-
   return (
     <Container maxWidth="sm">
       <Paper variant="outlined">
@@ -72,10 +69,13 @@ export default function TopTracks({ album }) {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                custom={0} >
+                custom={0}
+                layoutId={0}
+              >
                 <ListItem>
-                  <img src={album.images[0].url} alt={album.title} className="album-cover" />
+                  <Image src={album.images[0].url} alt={album.title} layout="intrinsic" width={200} height={200} />
                   <ListItemText
+                    className="album-header"
                     style={{ marginLeft: "1rem" }}
                     primary={<Typography variant="h4">{album.name}</Typography>}
                     secondary={<Typography variant="h6" color="textSecondary">{album.artists.map((artist, index) => (
