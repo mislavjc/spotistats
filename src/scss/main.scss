@@ -29,10 +29,20 @@ h1 {
   left: calc(50% - #{$width / 2});
 }
 
-
 .center {
   position: fixed;
   top: 20vh;
   @include center-width(500px);
   z-index: 10;
+}
+
+nav {
+  max-width: 950px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.album-cover {
+  width: 33%;
 }

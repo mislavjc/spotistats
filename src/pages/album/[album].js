@@ -8,6 +8,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar"
 import Paper from "@material-ui/core/Paper"
 import Divider from "@material-ui/core/Divider"
+import Typography from "@material-ui/core/Typography"
 import { AnimateSharedLayout, AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router"
 
@@ -42,21 +43,23 @@ export async function getServerSideProps(context) {
       }
     };
   }
-  const response = await axios.get("https://api.spotify.com/v1/me/top/tracks", {
+  const { album } = context.query
+  const response = await axios.get(`https://api.spotify.com/v1/albums/${album}`, {
     headers: {
       Authorization: `Bearer ${session.user.accessToken}`
     }
   })
-  const { items } = response.data
   return {
     props: {
-      tracks: items
+      album: response.data
     }
   }
 }
 
-export default function TopTracks({ tracks }) {
+export default function TopTracks({ album }) {
   const router = useRouter()
+
+  console.log(album)
 
   return (
     <Container maxWidth="sm">
@@ -64,7 +67,26 @@ export default function TopTracks({ tracks }) {
         <AnimateSharedLayout>
           <AnimatePresence>
             <List>
-              {tracks.map((track, index) => (
+              <motion.div
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                custom={0} >
+                <ListItem>
+                  <img src={album.images[0].url} alt={album.title} className="album-cover" />
+                  <ListItemText
+                    style={{ marginLeft: "1rem" }}
+                    primary={<Typography variant="h4">{album.name}</Typography>}
+                    secondary={<Typography variant="h6" color="textSecondary">{album.artists.map((artist, index) => (
+                      <span key={artist.name}>
+                        {album.artists.length > 1 ? album.artists.length !== index + 1 ? artist.name + ", " : artist.name : artist.name}
+                      </span>
+                    ))}</Typography>}
+                  />
+                </ListItem>
+              </motion.div>
+              {album.tracks.items.map((track, index) => (
                 <span key={track.name}>
                   <motion.div
                     variants={cardVariants}
@@ -74,9 +96,9 @@ export default function TopTracks({ tracks }) {
                     custom={index}
                     layoutId={track.name}
                   >
-                    <ListItem button onClick={() => router.push("/album/" + track.album.id)}>
+                    <ListItem button>
                       <ListItemAvatar>
-                        <Avatar variant="square" src={track.album.images[2].url} alt={track.name} />
+                        <Avatar>{index + 1}</Avatar>
                       </ListItemAvatar>
                       <ListItemText
                         primary={track.name}
@@ -84,9 +106,10 @@ export default function TopTracks({ tracks }) {
                           <span key={artist.name}>
                             {track.artists.length > 1 ? track.artists.length !== index + 1 ? artist.name + ", " : artist.name : artist.name}
                           </span>
-                        ))} />
+                        ))}
+                      />
                     </ListItem>
-                    {index !== tracks.length - 1 && <Divider variant="middle" />}
+                    {index !== album.tracks.items.length - 1 && <Divider variant="middle" />}
                   </motion.div>
                 </span>
               ))}
