@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper"
 import Divider from "@material-ui/core/Divider"
 import { AnimateSharedLayout, AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router"
+import { getSpotifyData } from "@/http";
 
 const cardVariants = {
   hidden: {
@@ -42,12 +43,7 @@ export async function getServerSideProps(context) {
       }
     };
   }
-  const response = await axios.get("https://api.spotify.com/v1/me/top/tracks", {
-    headers: {
-      Authorization: `Bearer ${session.user.accessToken}`
-    }
-  })
-  const { items } = response.data
+  const { items } = await getSpotifyData("/me/top/tracks", session.user.accessToken)
   return {
     props: {
       tracks: items

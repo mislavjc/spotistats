@@ -1,5 +1,4 @@
 import { getSession } from "next-auth/client";
-import axios from "axios"
 import Container from "@material-ui/core/Container"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
@@ -10,8 +9,9 @@ import Paper from "@material-ui/core/Paper"
 import Divider from "@material-ui/core/Divider"
 import Typography from "@material-ui/core/Typography"
 import { AnimateSharedLayout, AnimatePresence, motion } from "framer-motion";
-import { useRouter } from "next/router"
 import Image from "next/image"
+import { getSpotifyData } from "@/http";
+import ColorThief from "colorthief"
 
 const cardVariants = {
   hidden: {
@@ -45,19 +45,17 @@ export async function getServerSideProps(context) {
     };
   }
   const { album } = context.query
-  const response = await axios.get(`https://api.spotify.com/v1/albums/${album}`, {
-    headers: {
-      Authorization: `Bearer ${session.user.accessToken}`
-    }
-  })
+  const albumData = await getSpotifyData(`/albums/${album}`, session.user.accessToken)
+  const palette = await ColorThief.getPalette(albumData.images[0].url, 2)
   return {
     props: {
-      album: response.data
+      albumData,
+      palette
     }
   }
 }
 
-export default function TopTracks({ album }) {
+export default function TopTracks({ albumData: album, palette }) {
   return (
     <Container maxWidth="sm">
       <Paper variant="outlined">
@@ -98,7 +96,7 @@ export default function TopTracks({ album }) {
                   >
                     <ListItem button>
                       <ListItemAvatar>
-                        <Avatar>{index + 1}</Avatar>
+                        <Avatar style={{ background: `rgb(${palette[1][0]}, ${palette[1][1]}, ${palette[1][2]})` }}>{index + 1}</Avatar>
                       </ListItemAvatar>
                       <ListItemText
                         primary={track.name}
