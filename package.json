@@ -12,6 +12,7 @@
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
+    "colorthief": "^2.3.2",
     "framer-motion": "^4.1.17",
     "mongoose": "^5.12.14",
     "next": "11.0.0",
