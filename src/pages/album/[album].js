@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import { getSpotifyData } from '@/lib/http';
-import { cardVariants } from '@/lib/framer'
+import { cardVariants } from '@/lib/framer';
 import ColorThief from 'colorthief';
 
 export async function getServerSideProps(context) {

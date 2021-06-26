@@ -34,8 +34,6 @@ export async function getServerSideProps(context) {
 export default function TopArtists({ artists }) {
   const router = useRouter();
 
-  console.log(artists)
-
   return (
     <Container maxWidth="sm">
       <Paper variant="outlined">

@@ -14,7 +14,6 @@
     "axios": "^0.21.1",
     "colorthief": "^2.3.2",
     "framer-motion": "^4.1.17",
-    "mongoose": "^5.12.14",
     "next": "11.0.1",
     "next-auth": "^3.27.0",
     "react": "17.0.2",
