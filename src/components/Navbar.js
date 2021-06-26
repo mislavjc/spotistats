@@ -6,20 +6,18 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import GetAppIcon from '@material-ui/icons/GetApp';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import BrightnessHighIcon from '@material-ui/icons/BrightnessHigh';
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
 import AlbumIcon from '@material-ui/icons/Album';
 import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
+import Typography from '@material-ui/core/Typography';
 
 export const Navbar = () => {
   const router = useRouter();
@@ -58,6 +56,24 @@ export const Navbar = () => {
 
   return (
     <nav>
+      <div className="links">
+        <Link href="/top-tracks">
+          <Typography
+            variant="h6"
+            color={router.pathname === '/top-tracks' ? 'textPrimary' : 'textSecondary'}
+          >
+            Tracks
+          </Typography>
+        </Link>
+        <Link href="/top-artists">
+          <Typography
+            variant="h6"
+            color={router.pathname === '/top-artists' ? 'textPrimary' : 'textSecondary'}
+          >
+            Artists
+          </Typography>
+        </Link>
+      </div>
       <div>
         <div className="account">
           {session && !loading ? (

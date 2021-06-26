@@ -10,28 +10,9 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
-import { getSpotifyData } from '@/http';
+import { getSpotifyData } from '@/lib/http';
+import { cardVariants } from '@/lib/framer'
 import ColorThief from 'colorthief';
-
-const cardVariants = {
-  hidden: {
-    opacity: 0,
-    y: -50,
-  },
-  visible: index => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: index * 0.01,
-    },
-  }),
-  exit: {
-    opacity: 0,
-    transition: {
-      duration: 0.1,
-    },
-  },
-};
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);

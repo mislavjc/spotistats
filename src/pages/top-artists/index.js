@@ -19,20 +19,22 @@ export async function getServerSideProps(context) {
     context.res.end();
     return {
       props: {
-        tracks: false,
+        artists: false,
       },
     };
   }
-  const { items } = await getSpotifyData('/me/top/tracks', session.user.accessToken);
+  const { items } = await getSpotifyData('/me/top/artists', session.user.accessToken);
   return {
     props: {
-      tracks: items,
+      artists: items,
     },
   };
 }
 
-export default function TopTracks({ tracks }) {
+export default function TopArtists({ artists }) {
   const router = useRouter();
+
+  console.log(artists)
 
   return (
     <Container maxWidth="sm">
@@ -40,34 +42,34 @@ export default function TopTracks({ tracks }) {
         <AnimateSharedLayout>
           <AnimatePresence>
             <List>
-              {tracks.map((track, index) => (
-                <span key={track.name}>
+              {artists.map((artist, index) => (
+                <span key={artist.name}>
                   <motion.div
                     variants={cardVariants}
                     initial="hidden"
                     animate="visible"
                     exit="exit"
                     custom={index}
-                    layoutId={track.name}
+                    layoutId={artist.name}
                   >
-                    <ListItem button onClick={() => router.push('/album/' + track.album.id)}>
+                    <ListItem button onClick={() => router.push('/artist/' + artist.id)}>
                       <ListItemAvatar>
-                        <Avatar variant="square" src={track.album.images[2].url} alt={track.name} />
+                        <Avatar variant="square" src={artist.images[2].url} alt={artist.name} />
                       </ListItemAvatar>
                       <ListItemText
-                        primary={track.name}
-                        secondary={track.artists.map((artist, index) => (
-                          <span key={artist.name}>
-                            {track.artists.length > 1
-                              ? track.artists.length !== index + 1
-                                ? artist.name + ', '
-                                : artist.name
-                              : artist.name}
+                        primary={artist.name}
+                        secondary={artist.genres.map((genre, index) => (
+                          <span key={index}>
+                            {artist.genres.length > 1
+                              ? artist.genres.length !== index + 1
+                                ? genre + ', '
+                                : genre
+                              : genre}
                           </span>
                         ))}
                       />
                     </ListItem>
-                    {index !== tracks.length - 1 && <Divider variant="middle" />}
+                    {index !== artists.length - 1 && <Divider variant="middle" />}
                   </motion.div>
                 </span>
               ))}

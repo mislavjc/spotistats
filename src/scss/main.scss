@@ -40,7 +40,17 @@ nav {
   max-width: 950px;
   margin: 0 auto;
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  .links {
+    display: flex;
+    & > * {
+      margin-right: 1rem;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 @media (max-width: 512px) {
