@@ -1,4 +1,5 @@
 import { getSession } from 'next-auth/client';
+import { useState } from 'react';
 import Container from '@material-ui/core/Container';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -10,7 +11,10 @@ import Divider from '@material-ui/core/Divider';
 import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { getSpotifyData } from '@/lib/http';
-import { cardVariants } from '@/lib/framer';
+import { cardVariants, modalVariants } from '@/lib/framer';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import axios from 'axios';
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -23,16 +27,28 @@ export async function getServerSideProps(context) {
       },
     };
   }
+  console.log(session.user.id);
   const { items } = await getSpotifyData('/me/top/tracks', session.user.accessToken);
   return {
     props: {
       tracks: items,
+      token: session.user.accessToken,
+      id: session.user.id
     },
   };
 }
 
-export default function TopTracks({ tracks }) {
+export default function TopTracks({ tracks, token, id }) {
   const router = useRouter();
+  const [data, setData] = useState(tracks);
+
+  const handleClick = async range => {
+    axios.post('/api/time-range-tracks', { range, token }).then(res => setData(res.data));
+  };
+
+  const createPlaylist = async () => {
+    axios.post('/api/create-playlist', { id, token, data })
+  };
 
   return (
     <Container maxWidth="sm">
@@ -40,7 +56,13 @@ export default function TopTracks({ tracks }) {
         <AnimateSharedLayout>
           <AnimatePresence>
             <List>
-              {tracks.map((track, index) => (
+              <ButtonGroup color="primary">
+                <Button onClick={() => handleClick('short_term')}>One month</Button>
+                <Button onClick={() => handleClick('medium_term')}>Six months</Button>
+                <Button onClick={() => handleClick('long_term')}>Overall</Button>
+              </ButtonGroup>
+              <Button onClick={() => createPlaylist()}>Create playlist</Button>
+              {data.map((track, index) => (
                 <span key={track.name}>
                   <motion.div
                     variants={cardVariants}
