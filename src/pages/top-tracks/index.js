@@ -15,6 +15,13 @@ import { cardVariants, modalVariants } from '@/lib/framer';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import axios from 'axios';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Backdrop from '@material-ui/core/Backdrop';
+import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
+import TextField from '@material-ui/core/TextField';
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -27,13 +34,12 @@ export async function getServerSideProps(context) {
       },
     };
   }
-  console.log(session.user.id);
   const { items } = await getSpotifyData('/me/top/tracks', session.user.accessToken);
   return {
     props: {
       tracks: items,
       token: session.user.accessToken,
-      id: session.user.id
+      id: session.user.id,
     },
   };
 }
@@ -41,13 +47,33 @@ export async function getServerSideProps(context) {
 export default function TopTracks({ tracks, token, id }) {
   const router = useRouter();
   const [data, setData] = useState(tracks);
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const [url, setUrl] = useState('');
+  const [showForm, setShowForm] = useState(false);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleClick = async range => {
     axios.post('/api/time-range-tracks', { range, token }).then(res => setData(res.data));
   };
 
-  const createPlaylist = async () => {
-    axios.post('/api/create-playlist', { id, token, data })
+  const createPlaylist = async (name, description) => {
+    axios.post('/api/create-playlist', { id, token, data, name, description }).then(res => {
+      setUrl(res.data);
+      setMessage('Playlist created');
+      setOpen(true);
+      setShowForm(false);
+      setName('');
+      setDescription('');
+    });
+  };
+
+  const handleClose = reason => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
   };
 
   return (
@@ -61,7 +87,9 @@ export default function TopTracks({ tracks, token, id }) {
                 <Button onClick={() => handleClick('medium_term')}>Six months</Button>
                 <Button onClick={() => handleClick('long_term')}>Overall</Button>
               </ButtonGroup>
-              <Button onClick={() => createPlaylist()}>Create playlist</Button>
+              <Button variant="outlined" onClick={() => setShowForm(true)}>
+                Create playlist
+              </Button>
               {data.map((track, index) => (
                 <span key={track.name}>
                   <motion.div
@@ -97,6 +125,82 @@ export default function TopTracks({ tracks, token, id }) {
           </AnimatePresence>
         </AnimateSharedLayout>
       </Paper>
+      <AnimatePresence>
+        {showForm && (
+          <motion.div
+            variants={modalVariants}
+            className="modal"
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            layoutId={'form-fab'}
+          >
+            <Paper style={{ padding: '1rem' }}>
+              <div style={{ display: 'flex' }}>
+                <Typography variant="h5">Create playlist</Typography>
+                <Tooltip title="Zatvori">
+                  <IconButton
+                    style={{
+                      position: 'relative',
+                      top: '-8px',
+                      marginLeft: 'auto',
+                    }}
+                    onClick={() => {
+                      setShowForm(false);
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </Tooltip>
+              </div>
+              <TextField
+                id="playlist-title"
+                label="Playlist title"
+                variant="filled"
+                style={{ marginBottom: '1rem' }}
+                fullWidth
+                value={name}
+                onChange={e => setName(e.target.value)}
+              />
+              <TextField
+                id="playlist-description"
+                label="Playlist description"
+                variant="filled"
+                style={{ marginBottom: '1rem' }}
+                fullWidth
+                multiline
+                rows={4}
+                value={description}
+                onChange={e => setDescription(e.target.value)}
+              />
+              <Button
+                onClick={() => createPlaylist(name, description)}
+                variant="contained"
+                size="large"
+                color="primary"
+              >
+                Create
+              </Button>
+            </Paper>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <Backdrop style={{ color: '#fff', zIndex: 9 }} open={showForm} />
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message={message}
+        action={
+          <Button color="primary" onClick={() => window.open(url, '_blank')}>
+            Open
+          </Button>
+        }
+      />
     </Container>
   );
 }

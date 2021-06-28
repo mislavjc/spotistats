@@ -29,7 +29,7 @@ h1 {
   left: calc(50% - #{$width / 2});
 }
 
-.center {
+.modal {
   position: fixed;
   top: 20vh;
   @include center-width(500px);
@@ -78,4 +78,34 @@ nav {
 .account {
   display: flex;
   align-items: center
+}
+
+@media (min-width: 520px) and (max-width: 760px) {
+  .modal {
+    @include center-width(520px);
+  }
+}
+
+@media (min-width: 375px) and (max-width: 520px) {
+  .modal {
+    @include center-width(360px);
+  }
+}
+
+@media (min-width: 280px) and (max-width: 320px) {
+  .modal {
+    @include center-width(270px);
+  }
+}
+
+@media (min-width: 320px) and (max-width: 374px) {
+  .modal {
+    @include center-width(310px);
+  }
+}
+
+@media (max-width: 275px) {
+  .modal {
+    @include center-width(180px);
+  }
 }

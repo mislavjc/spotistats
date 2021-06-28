@@ -2,14 +2,13 @@ import { postSpotifyData } from '@/lib/http';
 
 const createPlaylistHandler = async (req, res) => {
   if (req.method === 'POST') {
-    const { id, token, data } = req.body;
+    const { id, token, data, name, description } = req.body;
     const playlistInfo = {
-      name: 'Test playlist',
-      description: 'Test playlist description',
+      name,
+      description,
       public: false,
     };
     const response = await postSpotifyData(`/users/${id}/playlists`, token, playlistInfo);
-    console.log(response);
     const link = response.external_urls.spotify;
     const playlistUri = response.uri.replace('spotify:playlist:', '');
     const uris = [];
