@@ -73,14 +73,22 @@ export default function TopTracks({ tracks, token, id }) {
 
   return (
     <div className="container">
-      {/* <ButtonGroup color="primary">
-        <Button onClick={() => handleClick('short_term')}>One month</Button>
-        <Button onClick={() => handleClick('medium_term')}>Six months</Button>
-        <Button onClick={() => handleClick('long_term')}>Overall</Button>
-        <Button variant="outlined" onClick={() => setShowForm(true)}>
+      {/* <div className="btn__container">
+        <button className="btn-outlined" onClick={() => handleClick('short_term')}>
+          One month
+        </button>
+        <button className="btn-outlined" onClick={() => handleClick('medium_term')}>
+          Six months
+        </button>
+        <button className="btn-outlined" onClick={() => handleClick('long_term')}>
+          Overall
+        </button>
+      </div> */}
+      <div className="fab-btn">
+        <button className="btn" variant="outlined" onClick={() => setShowForm(true)}>
           Create playlist
-        </Button>
-      </ButtonGroup> */}
+        </button>
+      </div>
       <AnimateSharedLayout>
         <AnimatePresence>
           <div className="table">

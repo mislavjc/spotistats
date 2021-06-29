@@ -165,6 +165,38 @@ nav {
   }
 }
 
+@mixin button_mixin($background) {
+  background: $background;
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 35rem;
+  border: 0;
+  border: 0.3rem solid var(--green);
+  font-weight: $bold;
+  transition: 250ms;
+  &:hover {
+    background: var(--light-green);
+    border: 0.3rem solid var(--light-green);
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+}
+
+.btn {
+  @include button_mixin(var(--green))
+}
+
+.btn-outlined {
+  @include button_mixin(transparent)
+}
+
+.btn__container {
+  display: flex;
+  justify-content: space-around;
+}
+
+
 .avatar {
   border-radius: 50%;
 }
@@ -190,6 +222,17 @@ nav {
 }
 
 @media (max-width: 768px) {
+  .fab-btn {
+    position: fixed;
+    bottom: 1rem;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .btn {
+      width: 20rem !important; 
+    }
+  }
   .landing-page {
     h1 {
       font-size: 3rem;

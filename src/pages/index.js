@@ -9,7 +9,7 @@ export default function Home() {
         <h1>Get your statics</h1>
         <p>Pick up your music right where you left off.</p>
         <Link href="/top-tracks" passHref>
-          <button className="btn">START USING</button>
+          <button className="btn-outlined">START USING</button>
         </Link>
       </div>
     </div>
