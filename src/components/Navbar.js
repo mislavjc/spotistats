@@ -35,7 +35,7 @@ export const Navbar = () => {
   return (
     <nav>
       <div className="links">
-        <Link href="/top-tracks">
+        <Link href="/top-tracks" passHref>
           <Typography
             variant="h6"
             color={router.pathname === '/top-tracks' ? 'textPrimary' : 'textSecondary'}
@@ -43,7 +43,7 @@ export const Navbar = () => {
             Tracks
           </Typography>
         </Link>
-        <Link href="/top-artists">
+        <Link href="/top-artists" passHref>
           <Typography
             variant="h6"
             color={router.pathname === '/top-artists' ? 'textPrimary' : 'textSecondary'}
