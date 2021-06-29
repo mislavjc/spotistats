@@ -10,8 +10,8 @@ function MyApp({ Component, pageProps }) {
         <title>Top tracks</title>
       </Head>
       <Provider session={pageProps.session}>
-          <Navbar />
-          <Component {...pageProps} />
+        <Navbar />
+        <Component {...pageProps} />
       </Provider>
     </>
   );
