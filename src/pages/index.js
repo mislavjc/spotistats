@@ -4,10 +4,14 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <Container maxWidth="sm">
-      <Button variant="outlined" color="primary">
-        <Link href="top-tracks">Tracks</Link>
-      </Button>
-    </Container>
+    <div className="landing-page">
+      <div>
+        <h1>Get your statics</h1>
+        <p>Pick up your music right where you left off.</p>
+        <Link href="/top-tracks" passHref>
+          <button className="btn">START USING</button>
+        </Link>
+      </div>
+    </div>
   );
 }

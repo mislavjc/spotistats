@@ -1,5 +1,26 @@
+:root {
+  --green: #1db954;
+  --light-green: #1ed760;
+  --bg-primary: #121212;
+  --black: #000000;
+  --bg-secondary: #282828;
+  --text-primary: #ffffff;
+  --text-secondary: ##b3b3b3;
+  --bg-blue: #2941ab;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+$light: 300;
+$normal: 400;
+$medium: 500;
+$semibold: 600;
+$bold: 700;
+$xbold: 800;
+$black: 900;
+
 body {
-  font-family: 'Inter';
+  font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   margin: 0;
   padding: 0;
@@ -37,17 +58,23 @@ h1 {
 }
 
 nav {
-  max-width: 950px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  .links {
+  background: var(--black);
+  padding: 0.5rem 0;
+  .nav {
+    color: var(--text-primary);
+    max-width: 950px;
+    margin: 0 auto;
     display: flex;
-    & > * {
-      margin-right: 1rem;
-      &:hover {
-        cursor: pointer;
+    align-items: center;
+    .links {
+      margin-left: auto;
+      display: flex;
+      & > * {
+        margin-right: 1rem;
+        &:hover {
+          color: var(--light-green);
+          cursor: pointer;
+        }
       }
     }
   }
@@ -76,8 +103,18 @@ nav {
 }
 
 .account {
+  border-left: 1px solid white;
   display: flex;
-  align-items: center
+  align-items: center;
+  padding-left: 1rem;
+  h3 {
+    margin-left: 1rem;
+    font-weight: $bold;
+    &:hover {
+      color: #1ed760;
+      cursor: pointer;
+    }
+  }
 }
 
 @media (min-width: 520px) and (max-width: 760px) {
@@ -107,5 +144,65 @@ nav {
 @media (max-width: 275px) {
   .modal {
     @include center-width(180px);
+  }
+}
+
+.btn {
+  background: var(--green);
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 35rem;
+  border: 0;
+  font-weight: $bold;
+  transition: 250ms;
+  &:hover {
+    background: var(--light-green);
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.landing-page {
+  height: calc(100vh - 74px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--light-green);
+  background: var(--bg-blue);
+  h1 {
+    font-size: 6rem;
+  }
+  p {
+    font-size: 1.25rem;
+    font-weight: $medium;
+  }
+  .btn {
+    color: var(--bg-blue);
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-page {
+    h1 {
+      font-size: 3rem;
+    }
+    p {
+      font-size: 1rem;
+    }
+  }
+  nav {
+    h3:not(.login) {
+      display: none;
+    }
+    padding: 0.5rem 1rem;
+    .account {
+      border-left: 0;
+    }
   }
 }

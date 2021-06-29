@@ -1,80 +1,43 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { signIn, useSession } from 'next-auth/client';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
-import Brightness4Icon from '@material-ui/icons/Brightness4';
-import BrightnessHighIcon from '@material-ui/icons/BrightnessHigh';
 import Typography from '@material-ui/core/Typography';
+import Image from 'next/image';
 
 export const Navbar = () => {
   const router = useRouter();
   const [session, loading] = useSession();
-  const [darkMode, setDarkMode] = useState('false');
-
-  const lightModeHandler = () => {
-    setDarkMode(false);
-    router.reload(window.location.pathname);
-  };
-
-  const darkModeHandler = () => {
-    setDarkMode(true);
-    router.reload(window.location.pathname);
-  };
-
-  useEffect(() => {
-    setDarkMode(localStorage.getItem('darkMode'));
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('darkMode', darkMode);
-  }, [darkMode]);
 
   return (
     <nav>
-      <div className="links">
-        <Link href="/top-tracks" passHref>
-          <Typography
-            variant="h6"
-            color={router.pathname === '/top-tracks' ? 'textPrimary' : 'textSecondary'}
-          >
-            Tracks
-          </Typography>
-        </Link>
-        <Link href="/top-artists" passHref>
-          <Typography
-            variant="h6"
-            color={router.pathname === '/top-artists' ? 'textPrimary' : 'textSecondary'}
-          >
-            Artists
-          </Typography>
-        </Link>
-      </div>
-      <div>
-        {session && !loading ? (
-          <div className="account">
-            <div>
-              {darkMode === 'true' ? (
-                <IconButton onClick={lightModeHandler}>
-                  <BrightnessHighIcon />
-                </IconButton>
-              ) : (
-                <IconButton onClick={darkModeHandler}>
-                  <Brightness4Icon />
-                </IconButton>
-              )}
+      <div className="nav">
+        <div className="logo">
+          <Link href="/" passHref>
+            <h1>Spotistats</h1>
+          </Link>
+        </div>
+        <div className="links">
+          <Link href="/top-tracks" passHref>
+            <h3>Tracks</h3>
+          </Link>
+          <Link href="/top-artists" passHref>
+            <h3>Artists</h3>
+          </Link>
+        </div>
+        <div>
+          {session && !loading ? (
+            <div className="account">
+              <Image className="avatar" src={session.user.picture} width={40} height={40} alt="user profile picture" />
+              <h3>Profile</h3>
             </div>
-            <div>
-              <Avatar src={session.user.picture} />
-            </div>
-          </div>
-        ) : (
-          <Button variant="outlined" className="btn" onClick={signIn}>
-            Sign in
-          </Button>
-        )}
+          ) : (
+            <h3 className="login" onClick={signIn}>
+              Sign in
+            </h3>
+          )}
+        </div>
       </div>
     </nav>
   );
