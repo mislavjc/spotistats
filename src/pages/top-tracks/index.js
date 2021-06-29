@@ -1,13 +1,6 @@
 import { getSession } from 'next-auth/client';
 import { useState } from 'react';
-import Container from '@material-ui/core/Container';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
 import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { getSpotifyData } from '@/lib/http';
@@ -22,6 +15,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 import TextField from '@material-ui/core/TextField';
+import Image from 'next/image';
+import { millisToMinutesAndSeconds } from '@/lib/utils';
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -77,54 +72,66 @@ export default function TopTracks({ tracks, token, id }) {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Paper variant="outlined">
-        <AnimateSharedLayout>
-          <AnimatePresence>
-            <List>
-              <ButtonGroup color="primary">
-                <Button onClick={() => handleClick('short_term')}>One month</Button>
-                <Button onClick={() => handleClick('medium_term')}>Six months</Button>
-                <Button onClick={() => handleClick('long_term')}>Overall</Button>
-              </ButtonGroup>
-              <Button variant="outlined" onClick={() => setShowForm(true)}>
-                Create playlist
-              </Button>
-              {data.map((track, index) => (
-                <span key={track.name}>
-                  <motion.div
-                    variants={cardVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    custom={index}
-                    layoutId={track.name}
-                  >
-                    <ListItem button onClick={() => router.push('/album/' + track.album.id)}>
-                      <ListItemAvatar>
-                        <Avatar variant="square" src={track.album.images[2].url} alt={track.name} />
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={track.name}
-                        secondary={track.artists.map((artist, index) => (
-                          <span key={artist.name}>
-                            {track.artists.length > 1
-                              ? track.artists.length !== index + 1
-                                ? artist.name + ', '
-                                : artist.name
-                              : artist.name}
-                          </span>
-                        ))}
-                      />
-                    </ListItem>
-                    {index !== tracks.length - 1 && <Divider variant="middle" />}
-                  </motion.div>
-                </span>
-              ))}
-            </List>
-          </AnimatePresence>
-        </AnimateSharedLayout>
-      </Paper>
+    <div className="container">
+      {/* <ButtonGroup color="primary">
+        <Button onClick={() => handleClick('short_term')}>One month</Button>
+        <Button onClick={() => handleClick('medium_term')}>Six months</Button>
+        <Button onClick={() => handleClick('long_term')}>Overall</Button>
+        <Button variant="outlined" onClick={() => setShowForm(true)}>
+          Create playlist
+        </Button>
+      </ButtonGroup> */}
+      <AnimateSharedLayout>
+        <AnimatePresence>
+          <div className="table">
+            <div className="table__header">
+              <div className="header__index">#</div>
+              <div>Title</div>
+              <div className="header__album">Album</div>
+              <div>Lenght</div>
+            </div>
+            {data.map((track, index) => (
+              <div key={track.name} onClick={() => router.push('/album/' + track.album.id)}>
+                <motion.div
+                  variants={cardVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  custom={index}
+                  layoutId={track.name}
+                  className="table__row"
+                >
+                  <div className="table__index">{index + 1}</div>
+                  <div>
+                    <Image
+                      src={track.album.images[1].url}
+                      alt={track.name}
+                      width={50}
+                      height={50}
+                    />
+                  </div>
+                  <div className="table__credits">
+                    <span className="title">{track.name}</span>
+                    <span className="artists">
+                      {track.artists.map((artist, index) => (
+                        <span key={artist.name}>
+                          {track.artists.length > 1
+                            ? track.artists.length !== index + 1
+                              ? artist.name + ', '
+                              : artist.name
+                            : artist.name}
+                        </span>
+                      ))}
+                    </span>
+                  </div>
+                  <div className="table__album">{track.album.name}</div>
+                  <div>{millisToMinutesAndSeconds(track.duration_ms)}</div>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </AnimatePresence>
+      </AnimateSharedLayout>
       <AnimatePresence>
         {showForm && (
           <motion.div
@@ -201,6 +208,6 @@ export default function TopTracks({ tracks, token, id }) {
           </Button>
         }
       />
-    </Container>
+    </div>
   );
 }
