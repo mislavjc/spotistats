@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from "@/styles/Landing.module.scss"
+import styles from '@/styles/Landing.module.scss';
 
 export default function Home() {
   return (
