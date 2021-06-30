@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Top tracks</title>
+        <title>Spotistats</title>
       </Head>
       <Provider session={pageProps.session}>
         <Navbar />
