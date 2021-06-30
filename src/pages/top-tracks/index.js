@@ -73,17 +73,17 @@ export default function TopTracks({ tracks, token, id }) {
 
   return (
     <div className="container">
-      {/* <div className="btn__container">
+      <div className="btn__container">
         <button className="btn-outlined" onClick={() => handleClick('short_term')}>
-          One month
+          1 mo
         </button>
         <button className="btn-outlined" onClick={() => handleClick('medium_term')}>
-          Six months
+          6 mo
         </button>
         <button className="btn-outlined" onClick={() => handleClick('long_term')}>
           Overall
         </button>
-      </div> */}
+      </div>
       <div className="fab-btn">
         <button className="btn" variant="outlined" onClick={() => setShowForm(true)}>
           Create playlist
