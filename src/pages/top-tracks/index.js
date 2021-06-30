@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { getSpotifyData } from '@/lib/http';
 import { cardVariants, modalVariants } from '@/lib/framer';
 import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import axios from 'axios';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,6 +16,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import TextField from '@material-ui/core/TextField';
 import Image from 'next/image';
 import { millisToMinutesAndSeconds } from '@/lib/utils';
+import styles from '@/styles/Tracks.module.scss';
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -91,11 +91,12 @@ export default function TopTracks({ tracks, token, id }) {
       </div>
       <AnimateSharedLayout>
         <AnimatePresence>
-          <div className="table">
-            <div className="table__header">
-              <div className="header__index">#</div>
+          <div className={styles.table}>
+            <div className={styles.table__header}>
+              <div className={styles.header__index}>#</div>
+              <div>&nbsp;</div>
               <div>Title</div>
-              <div className="header__album">Album</div>
+              <div className={styles.header__album}>Album</div>
               <div>Lenght</div>
             </div>
             {data.map((track, index) => (
@@ -107,9 +108,9 @@ export default function TopTracks({ tracks, token, id }) {
                   exit="exit"
                   custom={index}
                   layoutId={track.name}
-                  className="table__row"
+                  className={styles.table__row}
                 >
-                  <div className="table__index">{index + 1}</div>
+                  <div className={styles.table__index}>{index + 1}</div>
                   <div>
                     <Image
                       src={track.album.images[1].url}
@@ -118,9 +119,9 @@ export default function TopTracks({ tracks, token, id }) {
                       height={50}
                     />
                   </div>
-                  <div className="table__credits">
-                    <span className="title">{track.name}</span>
-                    <span className="artists">
+                  <div className={styles.table__credits}>
+                    <span className={styles.title}>{track.name}</span>
+                    <span className={styles.artists}>
                       {track.artists.map((artist, index) => (
                         <span key={artist.name}>
                           {track.artists.length > 1
@@ -132,7 +133,7 @@ export default function TopTracks({ tracks, token, id }) {
                       ))}
                     </span>
                   </div>
-                  <div className="table__album">{track.album.name}</div>
+                  <div className={styles.table__album}>{track.album.name}</div>
                   <div>{millisToMinutesAndSeconds(track.duration_ms)}</div>
                 </motion.div>
               </div>

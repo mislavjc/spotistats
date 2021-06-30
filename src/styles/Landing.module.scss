@@ -1,0 +1,21 @@
+@import "./variables";
+
+.landingPage {
+  height: calc(100vh - 74px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: $light-green;
+  background: $bg-blue;
+  h1 {
+    font-size: 6rem;
+  }
+  p {
+    font-size: 1.25rem;
+    font-weight: $medium;
+  }
+  .btn {
+    color: $bg-blue;
+  }
+}

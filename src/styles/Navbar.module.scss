@@ -1,0 +1,57 @@
+@import "./variables";
+
+$black: #000000;
+
+.navWrapper {
+  background: $black;
+  padding: 0.5rem 0;
+  .nav {
+    color: $text-primary;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    .links {
+      margin-left: auto;
+      display: flex;
+      & > * {
+        margin-right: 1rem;
+        &:hover {
+          color: $light-green;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.account {
+  border-left: 1px solid white;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  h3 {
+    margin-left: 1rem;
+    font-weight: $bold;
+    &:hover {
+      color: #1ed760;
+      cursor: pointer;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .navWrapper {
+    h3:not(.login) {
+      display: none;
+    }
+    padding: 0.5rem 1rem;
+    .account {
+      border-left: 0;
+    }
+  }
+}

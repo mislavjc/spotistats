@@ -1,0 +1,127 @@
+@import "../styles/variables";
+
+:root {
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: $normal;
+  margin: 0;
+  padding: 0;
+  background: $bg-primary;
+  color: $text-primary;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-weight: 700;
+}
+
+@mixin center-width($width) {
+  width: $width;
+  left: calc(50% - #{$width / 2});
+}
+
+.modal {
+  position: fixed;
+  top: 20vh;
+  @include center-width(500px);
+  z-index: 10;
+}
+
+@media (min-width: 520px) and (max-width: 760px) {
+  .modal {
+    @include center-width(520px);
+  }
+}
+
+@media (min-width: 375px) and (max-width: 520px) {
+  .modal {
+    @include center-width(360px);
+  }
+}
+
+@media (min-width: 280px) and (max-width: 320px) {
+  .modal {
+    @include center-width(270px);
+  }
+}
+
+@media (min-width: 320px) and (max-width: 374px) {
+  .modal {
+    @include center-width(310px);
+  }
+}
+
+@media (max-width: 275px) {
+  .modal {
+    @include center-width(180px);
+  }
+}
+
+@mixin button_mixin($background) {
+  background: $background;
+  color: $text-primary;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 35rem;
+  border: 0;
+  border: 0.3rem solid $green;
+  font-weight: $bold;
+  transition: 250ms;
+  &:hover {
+    background: $light-green;
+    border: 0.3rem solid $light-green;
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+}
+
+.btn {
+  @include button_mixin($green)
+}
+
+.btn-outlined {
+  @include button_mixin(transparent)
+}
+
+.btn__container {
+  display: flex;
+  justify-content: space-around;
+}
+
+@media (max-width: 768px) {
+  .fab-btn {
+    position: fixed;
+    bottom: 2rem;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .btn {
+      width: 20rem !important; 
+    }
+  }
+  .landing-page {
+    h1 {
+      font-size: 3rem;
+    }
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+

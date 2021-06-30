@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import '@/css/main.min.css';
+import '@/styles/Styles.global.scss';
 import { Provider } from 'next-auth/client';
 import { Navbar } from '@/components/Navbar';
 

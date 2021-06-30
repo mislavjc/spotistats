@@ -1,10 +1,9 @@
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
 import Link from 'next/link';
+import styles from "@/styles/Landing.module.scss"
 
 export default function Home() {
   return (
-    <div className="landing-page">
+    <div className={styles.landingPage}>
       <div>
         <h1>Get your statics</h1>
         <p>Pick up your music right where you left off.</p>
