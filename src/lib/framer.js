@@ -20,13 +20,15 @@ export const cardVariants = {
 
 export const modalVariants = {
   hidden: {
-    y: -1000,
+    y: -50,
+    opacity: 0,
   },
   visible: {
     y: 0,
+    opacity: 1,
   },
   exit: {
-    y: -1000,
+    y: -50,
     opacity: 0,
   },
 };

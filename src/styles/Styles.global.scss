@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '../styles/variables';
 
 :root {
@@ -72,18 +73,20 @@ h1 {
   }
 }
 
-@mixin button_mixin($background) {
+@mixin button_mixin($background, $background-hover, $border, $border-hover, $size, $color) {
   background: $background;
   color: $text-primary;
-  font-size: 1rem;
-  padding: 1rem 2rem;
-  border-radius: 35rem;
-  border: 0.3rem solid $green;
+  font-size: $size;
+  color: $color;
+  padding: $size $size * 2;
+  border-radius: 5rem;
+  text-transform: uppercase;
+  border: 0.3rem solid $border;
   font-weight: $bold;
   transition: 250ms;
   &:hover {
-    background: $light-green;
-    border: 0.3rem solid $light-green;
+    background: $background-hover;
+    border: 0.3rem solid $border-hover;
     transform: scale(1.1);
     cursor: pointer;
   }
@@ -100,16 +103,52 @@ h1 {
   border: 1px solid $gray;
 }
 
+.playlist-modal {
+  padding: 1rem;
+  background: $bg-secondary;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  input {
+    background: $gray-secondary;
+    border: 1px solid $gray-secondary;
+    border-radius: 3px;
+    font-size: inherit;
+    padding: 1rem;
+    color: inherit;
+    margin-bottom: 1rem;
+    &:hover {
+      border: 1px solid $text-secondary;
+      transition: 0.25s;
+    }
+  }
+  h1 {
+    margin: 1rem 0;
+  }
+}
+
+.backdrop {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.87);
+  z-index: 2;
+}
+
 .border-green {
   border: 1px solid $light-green;
-  background: $green;
   position: absolute;
-  z-index: -1;
+  z-index: 3;
   border-radius: 10rem;
   top: 0px;
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.background-green {
+  background: $green;
+  z-index: -1;
 }
 
 .chip-outlined {
@@ -123,16 +162,20 @@ h1 {
   display: flex;
   overflow: auto;
   & > * {
-    margin-left: 1rem
+    margin-left: 1rem;
   }
 }
 
 .btn {
-  @include button_mixin($green);
+  @include button_mixin($green, $light-green, $green, $light-green, 1rem, $text-primary);
 }
 
 .btn-outlined {
-  @include button_mixin(transparent);
+  @include button_mixin(transparent, $light-green, $green, $light-green, 1rem, $text-primary);
+}
+
+.btn-sm {
+  @include button_mixin($text-primary, $text-primary, $text-primary, $text-primary, 0.8rem, $bg-secondary);
 }
 
 .btn__container {
