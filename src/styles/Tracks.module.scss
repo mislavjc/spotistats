@@ -7,6 +7,7 @@
   .table__row {
     padding: 0.5rem 2rem;
     border-radius: 0.5rem;
+    cursor: pointer;
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: 30px 50px 0.5fr 0.5fr 30px;
@@ -24,6 +25,7 @@
     grid-template-columns: 30px 80px 0.5fr 0.5fr 30px;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #b3b3b34b;
+    text-transform: uppercase;
   }
   .table__index {
     font-weight: $semibold;

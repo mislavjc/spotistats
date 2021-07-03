@@ -97,7 +97,9 @@ export default function TopTracks({ tracks, token, id }) {
               <div>&nbsp;</div>
               <div>Title</div>
               <div className={styles.header__album}>Album</div>
-              <div>O</div>
+              <div>
+                <Image src="/icons/time.svg" alt="time icon" width={14} height={14} />
+              </div>
             </div>
             {data.map((track, index) => (
               <div key={track.name} onClick={() => router.push('/album/' + track.album.id)}>
