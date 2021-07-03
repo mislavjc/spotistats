@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { getSpotifyData } from '@/lib/http';
-import { cardVariants, modalVariants } from '@/lib/framer';
+import { cardVariants, modalVariants, spring } from '@/lib/framer';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -39,6 +39,13 @@ export async function getServerSideProps(context) {
   };
 }
 
+const timeSpans = [
+  { span: 'short_term', title: 'Last month' },
+  { span: 'medium_term', title: 'Last six months' },
+  { span: 'long_term', title: 'Overall' },
+  { span: 'artists', title: 'Artitst' },
+];
+
 export default function TopTracks({ tracks, token, id }) {
   const router = useRouter();
   const [data, setData] = useState(tracks);
@@ -48,8 +55,12 @@ export default function TopTracks({ tracks, token, id }) {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [selected, setSelected] = useState(timeSpans[1]);
 
   const handleClick = async range => {
+    if (range === 'artists') {
+      router.push('/top-artists');
+    }
     axios.post('/api/time-range-tracks', { range, token }).then(res => setData(res.data));
   };
 
@@ -73,17 +84,32 @@ export default function TopTracks({ tracks, token, id }) {
 
   return (
     <div className="container">
-      <div className="btn__container">
-        <button className="btn-outlined" onClick={() => handleClick('short_term')}>
-          1 mo
-        </button>
-        <button className="btn-outlined" onClick={() => handleClick('medium_term')}>
-          6 mo
-        </button>
-        <button className="btn-outlined" onClick={() => handleClick('long_term')}>
-          Overall
-        </button>
-      </div>
+      <AnimateSharedLayout>
+        <div className="chip-container">
+          {timeSpans.map((time, index) => (
+            <button
+              key={time.span}
+              className="chip-outlined"
+              onClick={() => {
+                console.log('zesz');
+                setSelected(time);
+                handleClick(time.span);
+              }}
+            >
+              {time.title}
+              {selected === time && (
+                <motion.div
+                  layoutId="outline"
+                  className="border-green"
+                  initial={false}
+                  transition={spring}
+                />
+              )}
+            </button>
+          ))}
+        </div>
+      </AnimateSharedLayout>
+      <div className="btn__container"></div>
       <div className="fab-btn">
         <button className="btn" variant="outlined" onClick={() => setShowForm(true)}>
           Create playlist

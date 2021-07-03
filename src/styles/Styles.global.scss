@@ -1,14 +1,15 @@
-@import "../styles/variables";
+@import '../styles/variables';
 
 :root {
   font-size: 14px;
   font-family: 'Montserrat', sans-serif;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
 }
-
 
 body {
   font-family: 'Montserrat', sans-serif;
@@ -77,7 +78,6 @@ h1 {
   font-size: 1rem;
   padding: 1rem 2rem;
   border-radius: 35rem;
-  border: 0;
   border: 0.3rem solid $green;
   font-weight: $bold;
   transition: 250ms;
@@ -89,12 +89,50 @@ h1 {
   }
 }
 
+@mixin chip_mixin($background) {
+  background: $background;
+  color: $text-primary;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 10rem;
+  white-space: nowrap;
+  border: 1px solid $gray;
+}
+
+.border-green {
+  border: 1px solid $light-green;
+  background: $green;
+  position: absolute;
+  z-index: -1;
+  border-radius: 10rem;
+  top: 0px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.chip-outlined {
+  @include chip_mixin(transparent);
+  position: relative;
+  margin: 0.5rem 0;
+}
+
+.chip-container {
+  max-width: 100vw;
+  display: flex;
+  overflow: auto;
+  & > * {
+    margin-left: 1rem
+  }
+}
+
 .btn {
-  @include button_mixin($green)
+  @include button_mixin($green);
 }
 
 .btn-outlined {
-  @include button_mixin(transparent)
+  @include button_mixin(transparent);
 }
 
 .btn__container {
@@ -111,7 +149,7 @@ h1 {
     display: flex;
     justify-content: center;
     .btn {
-      width: 20rem !important; 
+      width: 20rem !important;
     }
   }
   .landing-page {
@@ -128,4 +166,3 @@ h1 {
   max-width: 1200px;
   margin: 0 auto;
 }
-
