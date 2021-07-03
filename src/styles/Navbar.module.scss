@@ -1,9 +1,11 @@
 @import "./variables";
 
-$black: #000000;
-
 .navWrapper {
-  background: $black;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.678);
+  backdrop-filter: blur(4px);
   padding: 0.5rem 0;
   width: 100%;
   .nav {

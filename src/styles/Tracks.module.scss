@@ -1,5 +1,13 @@
 @import './variables';
 
+.pageTitle {
+  padding-top: 2rem;
+  padding-left: 1rem;
+  font-size: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .table {
   margin: 1rem;
   color: $text-secondary;

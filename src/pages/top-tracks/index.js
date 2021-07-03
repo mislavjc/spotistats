@@ -6,7 +6,7 @@ import { getSpotifyData } from '@/lib/http';
 import { cardVariants, modalVariants, spring } from '@/lib/framer';
 import axios from 'axios';
 import Image from 'next/image';
-import { millisToMinutesAndSeconds } from '@/lib/utils';
+import { millisToMinutesAndSeconds, getColor } from '@/lib/utils';
 import styles from '@/styles/Tracks.module.scss';
 
 export async function getServerSideProps(context) {
@@ -21,11 +21,13 @@ export async function getServerSideProps(context) {
     };
   }
   const { items } = await getSpotifyData('/me/top/tracks', session.user.accessToken);
+  const primary = await getColor(items[0].album.images[0].url, 2);
   return {
     props: {
       tracks: items,
       token: session.user.accessToken,
       id: session.user.id,
+      primary,
     },
   };
 }
@@ -37,7 +39,7 @@ const timeSpans = [
   { span: 'artists', title: 'Artists' },
 ];
 
-export default function TopTracks({ tracks, token, id }) {
+export default function TopTracks({ tracks, token, id, primary }) {
   const router = useRouter();
   const [data, setData] = useState(tracks);
   const [open, setOpen] = useState(false);
@@ -47,12 +49,16 @@ export default function TopTracks({ tracks, token, id }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [selected, setSelected] = useState(timeSpans[1]);
+  const [color, setColor] = useState(primary);
 
   const handleClick = async range => {
     if (range === 'artists') {
       router.push('/top-artists');
     }
-    axios.post('/api/time-range-tracks', { range, token }).then(res => setData(res.data));
+    const response = await axios.post('/api/time-range-tracks', { range, token });
+    setData(response.data);
+    const newColor = await axios.post('/api/color', response.data);
+    setColor(newColor.data);
   };
 
   const createPlaylist = async (name, description) => {
@@ -72,13 +78,20 @@ export default function TopTracks({ tracks, token, id }) {
         {showForm && (
           <motion.div
             initial={{ opacity: 0 }}
+            key="overlay"
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="backdrop"
             onClick={() => setShowForm(false)}
           />
         )}
+        <motion.div
+          className="overlay"
+          initial={false}
+          animate={{ background: `linear-gradient(180deg, ${color} 10%, #121212 100%)` }}
+        />
       </AnimatePresence>
+      <h1 className={styles.pageTitle}>Top songs</h1>
       <div className="container">
         <AnimateSharedLayout>
           <div className="chip-container">
@@ -87,7 +100,6 @@ export default function TopTracks({ tracks, token, id }) {
                 key={time.span}
                 className="chip-outlined"
                 onClick={() => {
-                  console.log('zesz');
                   setSelected(time);
                   handleClick(time.span);
                 }}
@@ -105,7 +117,6 @@ export default function TopTracks({ tracks, token, id }) {
             ))}
           </div>
         </AnimateSharedLayout>
-        <div className="btn__container"></div>
         <div className="fab-btn">
           <button className="btn" variant="outlined" onClick={() => setShowForm(true)}>
             Create playlist
@@ -173,7 +184,7 @@ export default function TopTracks({ tracks, token, id }) {
               initial="hidden"
               animate="visible"
               exit="exit"
-              layoutId="modal"
+              key="playlist-modal"
             >
               <h2>Create a playlist</h2>
               <input
