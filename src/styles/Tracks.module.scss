@@ -1,14 +1,15 @@
 @import './variables';
 
 .table {
-  margin-top: 1rem;
+  margin: 1rem;
   color: $text-secondary;
   font-weight: $medium;
   .table__row {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2rem;
     border-radius: 0.5rem;
     display: grid;
-    grid-template-columns: 30px 75px 480px 505px 10px;
+    grid-gap: 1rem;
+    grid-template-columns: 30px 50px 0.5fr 0.5fr 30px;
     div {
       display: flex;
       align-items: center;
@@ -19,7 +20,8 @@
   }
   .table__header {
     display: grid;
-    grid-template-columns: 30px 75px 480px 505px 10px;
+    padding: 0.5rem 2rem;
+    grid-template-columns: 30px 80px 0.5fr 0.5fr 30px;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #b3b3b34b;
   }
@@ -42,12 +44,13 @@
 @media (max-width: 520px) {
   .table {
     .table__row {
-      grid-template-columns: 0.2fr 1fr 0.1fr;
+      grid-template-columns: 50px 1fr 30px;
       grid-gap: 1rem;
+      padding: 0.5rem;
     }
     .table__header {
-      grid-template-columns: 0fr 1fr 0.1fr;
-      margin: 0 1rem;
+      grid-template-columns: 0fr 1fr 30px;
+      padding: 0.5rem;
     }
     .table__album,
     .table__index {
@@ -57,7 +60,7 @@
     .header__index {
       display: none;
     }
-    margin: 1rem 0.5rem;
+    margin: 1rem;
     font-size: 0.9rem;
     .title {
       font-size: 1rem;

@@ -97,7 +97,7 @@ export default function TopTracks({ tracks, token, id }) {
               <div>&nbsp;</div>
               <div>Title</div>
               <div className={styles.header__album}>Album</div>
-              <div>Lenght</div>
+              <div>O</div>
             </div>
             {data.map((track, index) => (
               <div key={track.name} onClick={() => router.push('/album/' + track.album.id)}>
