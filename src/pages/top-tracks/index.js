@@ -164,15 +164,18 @@ export default function TopTracks({ tracks, token, id, primary }) {
                     <div className={styles.table__credits}>
                       <span className={styles.title}>{track.name}</span>
                       <span className={styles.artists}>
-                        {track.artists.map((artist, index) => (
-                          <span key={artist.name}>
-                            {track.artists.length > 1
-                              ? track.artists.length !== index + 1
-                                ? artist.name + ', '
-                                : artist.name
-                              : artist.name}
-                          </span>
-                        ))}
+                        {track.explicit && <span className={styles.explicit}>E</span>}
+                        <span>
+                          {track.artists.map((artist, index) => (
+                            <span key={artist.name}>
+                              {track.artists.length > 1
+                                ? track.artists.length !== index + 1
+                                  ? artist.name + ', '
+                                  : artist.name
+                                : artist.name}
+                            </span>
+                          ))}
+                        </span>
                       </span>
                     </div>
                     <div className={styles.table__album}>{track.album.name}</div>
