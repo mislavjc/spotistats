@@ -1,34 +1,125 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Spotistats
 
-First, run the development server:
+Next.js application using Spotify API for user listening habbits and statistics.
 
-```bash
-npm run dev
-# or
-yarn dev
+
+## Demo
+
+https://spotistats.vercel.app/
+
+  
+## Features
+
+- Playlist creation
+- Time frame selection
+
+  
+## API Reference
+
+#### Get most listened tracks based on a time range
+
+```http
+  POST /api/time-range-tracks
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `range`      | `string` | **Required**. Specified time range for tracks fetching |
+| `token`      | `string` | **Required**. Users Spotify access token |
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+#### Get dominant color
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```http
+  POST /api/color
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `array of songs` | `array` | **Required**. Array of songs Spotify API returns |
 
-## Learn More
+#### Create a playlist of most listened songs
 
-To learn more about Next.js, take a look at the following resources:
+```http
+  POST /api/create-playlist
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required**. Spotify user id |
+| `token` | `string` | **Required**. Users Spotify access token |
+| `array of songs` | `array` | **Required**. Array of songs Spotify API returns |
+| `name` | `string` | **Required**. Playlist name |
+| `Description` | `string` | Playlist description |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### getSpotifyData(url, token)
+
+Takes Spotify API endpoint and access token and returns the fetched data.
+
+#### postSpotifyData(url, token, data)
+
+Takes Spotify API endpoint, access token and data object and posts the data to the Spotify API 
+& returns the response.
+
+#### millisToMinutesAndSeconds(milis)
+
+Takes miliseconds and converts them to minutes and second. 
+
+#### arrToRgb(arr)
+
+Takes an array of RGB values `[${r}, ${g}, ${b}]` and converts it to `rgb(${r}, ${g}, ${b})`.
+
+#### getColor(url)
+
+Takes an image url and returns the dominant color. 
+
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`SPOTIFY_CLIENT_ID`
+
+`SPOTIFY_CLIENT_SECRET`
+
+  
+## Tech Stack
+
+**Client:** Next.js, SCSS, Framer Motion
+
+**Server:** Node
+
+
+## Optimizations
+
+Switched from Material-UI to custom SCSS for a ~50% reducuction to bundle size.
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/mislavjc/spotistats.git
+```
+
+Go to the project directory
+
+```bash
+  cd spotistats
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run dev
+```
+
+  
