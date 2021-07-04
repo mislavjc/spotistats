@@ -1,9 +1,50 @@
 @use "sass:math";
 @import '../styles/variables';
 
+
+@font-face {
+  font-family: "PlusJakartaSans";
+  src: url("/fonts/PlusJakartaSans/PlusJakartaSans-Light.ttf");
+  font-style: light;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PlusJakartaSans";
+  src: url("/fonts/PlusJakartaSans/PlusJakartaSans-Regular.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PlusJakartaSans";
+  src: url("/fonts/PlusJakartaSans/PlusJakartaSans-Medium.ttf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PlusJakartaSans";
+  src: url("/fonts/PlusJakartaSans/PlusJakartaSans-Bold.ttf");
+  font-style: bold;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PlusJakartaSans";
+  src: url("/fonts/PlusJakartaSans/PlusJakartaSans-ExtraBold.ttf");
+  font-style: bold;
+  font-weight: 900;
+  font-display: swap;
+}
+
 :root {
   font-size: 14px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'PlusJakartaSans', sans-serif;
 }
 
 *,
@@ -13,7 +54,7 @@
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'PlusJakartaSans', sans-serif;
   font-weight: $normal;
   margin: 0;
   padding: 0;
@@ -27,8 +68,8 @@ html {
   box-sizing: border-box;
 }
 
-h1 {
-  font-weight: 700;
+h1, h2 {
+  font-weight: $black;
 }
 
 @mixin center-width($width) {
