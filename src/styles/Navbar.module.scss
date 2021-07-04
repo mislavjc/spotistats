@@ -4,8 +4,8 @@
   position: fixed;
   top: 0;
   z-index: 1;
-  background: rgba(0, 0, 0, 0.678);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(1rem);
   padding: 0.5rem 0;
   width: 100%;
   .nav {

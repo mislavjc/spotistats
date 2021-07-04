@@ -20,7 +20,7 @@ export async function getServerSideProps(context) {
       },
     };
   }
-  const { items } = await getSpotifyData('/me/top/tracks', session.user.accessToken);
+  const { items } = await getSpotifyData('/me/top/tracks?limit=30', session.user.accessToken);
   const primary = await getColor(items[0].album.images[0].url, 2);
   return {
     props: {

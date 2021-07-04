@@ -12,7 +12,6 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <Provider session={pageProps.session}>
         <Navbar />
-        <div style={{ marginTop: '5.3rem' }} />
         <Component {...pageProps} />
       </Provider>
     </>
