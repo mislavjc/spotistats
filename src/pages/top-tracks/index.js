@@ -8,6 +8,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import { millisToMinutesAndSeconds, getColor } from '@/lib/utils';
 import styles from '@/styles/Tracks.module.scss';
+import Head from 'next/head';
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -74,6 +75,9 @@ export default function TopTracks({ tracks, token, id, primary }) {
 
   return (
     <>
+      <Head>
+        <title>Top tracks | Spotistats</title>
+      </Head>
       <AnimatePresence>
         {(showForm || open) && (
           <motion.div

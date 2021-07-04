@@ -9,6 +9,7 @@ const Navbar = () => {
   return (
     <nav className={styles.navWrapper}>
       <div className={styles.nav}>
+        <Image src="/icons/logo.svg" alt="logo" width={40} height={40} />
         <div className={styles.logo}>
           <Link href="/" passHref>
             <h1>Spotistats</h1>

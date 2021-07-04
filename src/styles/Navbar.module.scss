@@ -1,4 +1,4 @@
-@import "./variables";
+@import './variables';
 
 .navWrapper {
   position: fixed;
@@ -14,6 +14,13 @@
     margin: 0 auto;
     display: flex;
     align-items: center;
+    .logo {
+      margin-left: 0.5rem;
+      cursor: pointer;
+      &:hover {
+        color: $light-green;
+      }
+    }
     .links {
       margin-left: auto;
       display: flex;
