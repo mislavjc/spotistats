@@ -1,0 +1,30 @@
+@import './variables';
+
+$black: #000000;
+
+.footerWrapper {
+  background: $black;
+}
+
+.footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 5rem;
+  div {
+    padding: 1rem;
+  }
+  p {
+    color: $text-secondary;
+    a {
+      color: inherit;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .footer__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}

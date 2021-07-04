@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import '@/styles/Styles.global.scss';
 import { Provider } from 'next-auth/client';
-import { Navbar } from '@/components/Navbar';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -13,6 +14,7 @@ function MyApp({ Component, pageProps }) {
       <Provider session={pageProps.session}>
         <Navbar />
         <Component {...pageProps} />
+        <Footer />
       </Provider>
     </>
   );

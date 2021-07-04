@@ -3,7 +3,7 @@ import { signIn, useSession } from 'next-auth/client';
 import Image from 'next/image';
 import styles from '@/styles/Navbar.module.scss';
 
-export const Navbar = () => {
+const Navbar = () => {
   const [session, loading] = useSession();
 
   return (
@@ -44,3 +44,5 @@ export const Navbar = () => {
     </nav>
   );
 };
+
+export default Navbar;
