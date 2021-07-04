@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }) {
         <title>Spotistats</title>
       </Head>
       <Provider session={pageProps.session}>
-        <Navbar />
+        <Navbar />       
         <Component {...pageProps} />
         <Footer />
       </Provider>

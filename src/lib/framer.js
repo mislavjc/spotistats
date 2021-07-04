@@ -38,3 +38,52 @@ export const spring = {
   stiffness: 500,
   damping: 30,
 };
+
+export const menuVariants = {
+  hidden: {
+    x: 400,
+    opacity: 0,
+  },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      type: 'tween',
+      duration: 0.25,
+      delayChildren: 0.1,
+    },
+  },
+  exit: {
+    x: 400,
+    opacity: 0,
+    transition: {
+      type: 'tween',
+      duration: 0.25,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+export const textVariants = {
+  hidden: {
+    x: 100,
+    opacity: 0,
+  },
+  visible: index => ({
+    x: 0,
+    opacity: 1,
+    transition: {
+      delay: index * 0.015,
+      type: 'tween',
+      duration: 0.5,
+    },
+  }),
+  exit: {
+    x: 400,
+    opacity: 0,
+    transition: {
+      type: 'tween',
+      duration: 0.5,
+    },
+  },
+};

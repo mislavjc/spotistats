@@ -33,6 +33,9 @@
       }
     }
   }
+  .menuIcon {
+    display: none;
+  }
 }
 
 .avatar {
@@ -62,6 +65,43 @@
     padding: 0.5rem 1rem;
     .account {
       border-left: 0;
+    }
+    font-size: 0.7rem;
+    .menuIcon {
+      display: flex;
+      align-items: center;
+      margin-left: 1rem;
+    }
+  }
+  .menu {
+    position: absolute;
+    height: 275%;
+    width: 100%;
+    background: black;
+    z-index: 3;
+    & > div {
+      padding: 1rem 1rem 0 2.5rem;
+    }
+    .seperator {
+      font-size: 2px;
+      padding: 0px 10px;
+      background: $text-primary;
+    }
+    p {
+      font-size: 1.5rem;
+      color: $text-secondary;
+    }
+    h1,
+    p {
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
+    .close {
+      position: absolute;
+      top: 0;
+      right: 0;
     }
   }
 }
