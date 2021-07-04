@@ -50,9 +50,20 @@ h1 {
   z-index: -1;
 }
 
+.backdrop {
+  position: absolute;
+  height: 275%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.87);
+  z-index: 2;
+}
+
 @media (min-width: 520px) and (max-width: 760px) {
   .modal {
     @include center-width(520px);
+  }
+  .backdrop {
+    height: 300%;
   }
 }
 
@@ -60,11 +71,17 @@ h1 {
   .modal {
     @include center-width(360px);
   }
+  .backdrop {
+    height: 350%;
+  }
 }
 
 @media (min-width: 280px) and (max-width: 320px) {
   .modal {
     @include center-width(270px);
+  }
+  .backdrop {
+    height: 490%;
   }
 }
 
@@ -72,11 +89,17 @@ h1 {
   .modal {
     @include center-width(310px);
   }
+  .backdrop {
+    height: 440%;
+  }
 }
 
 @media (max-width: 275px) {
   .modal {
     @include center-width(180px);
+  }
+  .backdrop {
+    height: 450%;
   }
 }
 
@@ -145,13 +168,6 @@ h1 {
   }
 }
 
-.backdrop {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.87);
-  z-index: 2;
-}
 
 .border-green {
   border: 1px solid $light-green;
