@@ -1,7 +1,8 @@
 @import "./variables";
 
 .landingPage {
-  height: calc(100vh - 74px);
+  padding: 1rem;
+  height: calc(100vh);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,5 +18,13 @@
   }
   .btn {
     color: $bg-blue;
+  }
+}
+
+@media (max-width: 768px) {
+  .landingPage {
+    h1 {
+      font-size: 5rem;
+    }
   }
 }

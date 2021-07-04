@@ -6,7 +6,7 @@ export default function Home() {
     <div className={styles.landingPage}>
       <div>
         <h1>Get your statics</h1>
-        <p>Pick up your music right where you left off.</p>
+        <p>See what tracks were your most listened.</p>
         <Link href="/top-tracks" passHref>
           <button className="btn">START USING</button>
         </Link>
