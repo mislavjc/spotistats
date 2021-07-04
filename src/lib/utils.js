@@ -12,5 +12,5 @@ export const arrToRgb = arr => {
 
 export const getColor = async url => {
   const color = await ColorThief.getPalette(url, 2);
-  return arrToRgb(color[0]);
+  return arrToRgb(color[1]);
 };

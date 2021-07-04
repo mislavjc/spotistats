@@ -38,7 +38,7 @@ h1 {
 
 .modal {
   position: fixed;
-  top: 20vh;
+  top: 33vh;
   @include center-width(500px);
   z-index: 10;
 }
@@ -134,6 +134,17 @@ h1 {
   }
 }
 
+.modal-light {
+  background: $text-primary;
+  color: $bg-secondary;
+  h2 {
+    margin-bottom: 0;
+  }
+  p {
+    margin-bottom: 2rem;
+  }
+}
+
 .backdrop {
   position: absolute;
   height: 100%;
@@ -182,7 +193,18 @@ h1 {
 }
 
 .btn-sm {
-  @include button_mixin($text-primary, $text-primary, $text-primary, $text-primary, 0.8rem, $bg-secondary);
+  @include button_mixin(
+    $text-primary,
+    $text-primary,
+    $text-primary,
+    $text-primary,
+    0.8rem,
+    $bg-secondary
+  );
+}
+
+.btn-sm-green {
+  @include button_mixin($green, $light-green, $green, $light-green, 0.8rem, $text-primary);
 }
 
 .btn__container {

@@ -43,13 +43,13 @@ export default function TopTracks({ tracks, token, id, primary }) {
   const router = useRouter();
   const [data, setData] = useState(tracks);
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState('');
   const [url, setUrl] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [selected, setSelected] = useState(timeSpans[1]);
   const [color, setColor] = useState(primary);
+  const [playlistTitle, setPlaylistTitle] = useState('');
 
   const handleClick = async range => {
     if (range === 'artists') {
@@ -63,26 +63,29 @@ export default function TopTracks({ tracks, token, id, primary }) {
 
   const createPlaylist = async (name, description) => {
     axios.post('/api/create-playlist', { id, token, data, name, description }).then(res => {
-      setUrl(res.data);
-      setMessage('Playlist created');
       setOpen(true);
       setShowForm(false);
+      setPlaylistTitle(name);
       setName('');
       setDescription('');
+      setUrl(res.data);
     });
   };
 
   return (
     <>
       <AnimatePresence>
-        {showForm && (
+        {(showForm || open) && (
           <motion.div
             initial={{ opacity: 0 }}
             key="overlay"
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="backdrop"
-            onClick={() => setShowForm(false)}
+            onClick={() => {
+              setShowForm(false);
+              setOpen(false);
+            }}
           />
         )}
         <motion.div
@@ -202,6 +205,26 @@ export default function TopTracks({ tracks, token, id, primary }) {
               <div className="button__container">
                 <button onClick={() => createPlaylist(name, description)} className="btn-sm">
                   Create
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              variants={modalVariants}
+              className="modal modal-light playlist-modal"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              key="playlist-created-modal"
+            >
+              <h2>Playlist created successfully!</h2>
+              <p>{playlistTitle} was added to your library.</p>
+              <div className="button__container">
+                <button onClick={() => window.open(url, '_blank')} className="btn-sm-green">
+                  Open playlist
                 </button>
               </div>
             </motion.div>
