@@ -6,7 +6,7 @@ export const getSpotifyData = async (url, token) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  return response.data;
+  return response.data.items;
 };
 
 export const postSpotifyData = async (url, token, data) => {

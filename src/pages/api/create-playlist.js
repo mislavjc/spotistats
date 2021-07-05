@@ -2,7 +2,7 @@ import { postSpotifyData } from '@/lib/http';
 
 const createPlaylistHandler = async (req, res) => {
   if (req.method === 'POST') {
-    const { id, token, data, name, description } = req.body;
+    const { id, token, playlistData, name, description } = req.body;
     const playlistInfo = {
       name,
       description,
@@ -12,7 +12,7 @@ const createPlaylistHandler = async (req, res) => {
     const link = response.external_urls.spotify;
     const playlistUri = response.uri.replace('spotify:playlist:', '');
     const uris = [];
-    for (const track of data) {
+    for (const track of playlistData) {
       uris.push(track.uri);
     }
     await postSpotifyData(`/playlists/${playlistUri}/tracks`, token, uris);

@@ -21,26 +21,40 @@ export async function getServerSideProps(context) {
       },
     };
   }
-  const { items } = await getSpotifyData('/me/top/tracks?limit=30', session.user.accessToken);
-  const primary = await getColor(items[0].album.images[0].url, 2);
+  const tracks = {
+    short_term: await getSpotifyData(
+      '/me/top/tracks?time_range=short_term&limit=30',
+      session.user.accessToken,
+    ),
+    medium_term: await getSpotifyData(
+      '/me/top/tracks?time_range=medium_term&limit=30',
+      session.user.accessToken,
+    ),
+    long_term: await getSpotifyData(
+      '/me/top/tracks?time_range=long_term&limit=30',
+      session.user.accessToken,
+    ),
+  };
+  const short_color = await getColor(tracks.short_term[0].album.images[0].url, 2);
+  const medium_color = await getColor(tracks.medium_term[0].album.images[0].url, 2);
+  const long_color = await getColor(tracks.long_term[0].album.images[0].url, 2);
+  const timeSpans = [
+    { span: 'short_term', title: 'Last month', color: short_color },
+    { span: 'medium_term', title: 'Last six months', color: medium_color },
+    { span: 'long_term', title: 'Overall', color: long_color },
+    // { span: 'artists', title: 'Artists' },
+  ];
   return {
     props: {
-      tracks: items,
+      tracks,
+      timeSpans,
       token: session.user.accessToken,
       id: session.user.id,
-      primary,
     },
   };
 }
 
-const timeSpans = [
-  { span: 'short_term', title: 'Last month' },
-  { span: 'medium_term', title: 'Last six months' },
-  { span: 'long_term', title: 'Overall' },
-  { span: 'artists', title: 'Artists' },
-];
-
-export default function TopTracks({ tracks, token, id, primary }) {
+export default function TopTracks({ tracks, token, id, timeSpans }) {
   const router = useRouter();
   const [data, setData] = useState(tracks);
   const [open, setOpen] = useState(false);
@@ -48,22 +62,22 @@ export default function TopTracks({ tracks, token, id, primary }) {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [selected, setSelected] = useState(timeSpans[1]);
-  const [color, setColor] = useState(primary);
+  const [selected, setSelected] = useState(timeSpans[0]);
   const [playlistTitle, setPlaylistTitle] = useState('');
+  const [range, setRange] = useState(timeSpans[0].span);
+  const [color, setColor] = useState(timeSpans[0].color);
 
-  const handleClick = async range => {
+  const handleClick = (range, index) => {
     if (range === 'artists') {
       router.push('/top-artists');
     }
-    const response = await axios.post('/api/time-range-tracks', { range, token });
-    setData(response.data);
-    const newColor = await axios.post('/api/color', response.data);
-    setColor(newColor.data);
+    setRange(range);
+    setColor(timeSpans[index].color);
   };
 
   const createPlaylist = async (name, description) => {
-    axios.post('/api/create-playlist', { id, token, data, name, description }).then(res => {
+    const playlistData = data[range];
+    axios.post('/api/create-playlist', { id, token, playlistData, name, description }).then(res => {
       setOpen(true);
       setShowForm(false);
       setPlaylistTitle(name);
@@ -108,7 +122,7 @@ export default function TopTracks({ tracks, token, id, primary }) {
                 className="chip-outlined"
                 onClick={() => {
                   setSelected(time);
-                  handleClick(time.span);
+                  handleClick(time.span, index);
                 }}
               >
                 {time.title}
@@ -141,7 +155,7 @@ export default function TopTracks({ tracks, token, id, primary }) {
                   <Image src="/icons/time.svg" alt="time icon" width={14} height={14} />
                 </div>
               </div>
-              {data.map((track, index) => (
+              {data[range].map((track, index) => (
                 <div key={track.name} onClick={() => router.push('/album/' + track.album.id)}>
                   <motion.div
                     variants={cardVariants}
