@@ -24,7 +24,7 @@ export default function Home() {
               </div>
               <div>
                 <h2>Most listened tracks.</h2>
-                <p>See the tracks you&apos;ve listened the most.</p>
+                <p>See the tracks you&apos;ve listened to the most.</p>
               </div>
             </div>
             <div>
