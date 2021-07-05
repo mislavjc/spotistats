@@ -15,6 +15,18 @@
     display: flex;
     align-items: center;
     .logo {
+      sup {
+        color: $bg-primary;
+        text-transform: uppercase;
+        font-size: 0.5rem;
+        font-weight: $xbold;
+        background: $text-secondary;
+        padding: 0.2rem;
+        border-radius: 0.2rem;
+        position: relative;
+        top: -0.2rem;
+        left: 0.1rem;
+      }
       margin-left: 0.5rem;
       cursor: pointer;
       &:hover {
