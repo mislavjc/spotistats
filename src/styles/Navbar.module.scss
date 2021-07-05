@@ -86,8 +86,8 @@
     }
   }
   .menu {
-    position: absolute;
-    height: 275%;
+    position: fixed;
+    height: 100%;
     width: 100%;
     background: black;
     z-index: 3;

@@ -87,7 +87,7 @@ h1, h2 {
 .overlay {
   position: absolute;
   width: 100%;
-  height: 30vh;
+  height: 55vh;
   z-index: -1;
 }
 
@@ -155,6 +155,7 @@ h1, h2 {
   border: 0.3rem solid $border;
   font-weight: $bold;
   transition: 250ms;
+  letter-spacing: 0.1rem;
   &:hover {
     background: $background-hover;
     border: 0.3rem solid $border-hover;
@@ -288,6 +289,9 @@ h1, h2 {
     p {
       font-size: 1rem;
     }
+  }
+  .overlay {
+    height: 40vh;
   }
 }
 

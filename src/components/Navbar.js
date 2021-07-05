@@ -17,7 +17,9 @@ const Navbar = () => {
           <Image src="/icons/logo.svg" alt="logo" width={40} height={40} />
           <div className={styles.logo}>
             <Link href="/" passHref>
-              <h1>Spotistats<sup>beta</sup></h1>
+              <h1>
+                Spotistats<sup>beta</sup>
+              </h1>
             </Link>
           </div>
           <div className={styles.links}>
@@ -77,14 +79,22 @@ const Navbar = () => {
               <motion.span variants={textVariants} custom={3} className={styles.seperator}>
                 &nbsp;
               </motion.span>
-              <motion.p variants={textVariants} custom={4}>
-                <Link href="/">
-                  <a>Account</a>
-                </Link>
-              </motion.p>
-              <motion.p variants={textVariants} custom={5} onClick={() => signOut()}>
-                Log out
-              </motion.p>
+              {session && !loading ? (
+                <>
+                  <motion.p variants={textVariants} custom={4} onClick={() => setShowMenu(false)}>
+                    <Link href="/">
+                      <a>Account</a>
+                    </Link>
+                  </motion.p>
+                  <motion.p variants={textVariants} custom={5} onClick={() => signOut()}>
+                    Log out
+                  </motion.p>
+                </>
+              ) : (
+                <motion.p variants={textVariants} custom={5} onClick={signIn}>
+                  Sign in
+                </motion.p>
+              )}
             </div>
             <div className={styles.close} custom={6} onClick={() => setShowMenu(false)}>
               <Image src="/icons/close.svg" width={30} height={30} alt="close" />
