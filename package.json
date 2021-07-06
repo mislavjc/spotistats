@@ -9,13 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.4",
-    "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "colorthief": "^2.3.2",
     "framer-motion": "^4.1.17",
     "next": "11.0.1",
-    "next-auth": "^3.27.1",
+    "next-auth": "^3.27.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "sass": "^1.35.1"
