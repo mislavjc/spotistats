@@ -70,7 +70,7 @@ const Navbar = () => {
               </motion.h1>
               <motion.h1 variants={textVariants} custom={1} onClick={() => setShowMenu(false)}>
                 <Link href="/top-artists">
-                  <a>Top artist</a>
+                  <a>Top artists</a>
                 </Link>
               </motion.h1>
               <motion.h1 variants={textVariants} custom={2}>

@@ -42,7 +42,7 @@ export async function getServerSideProps(context) {
     { span: 'short_term', title: 'Last month', color: short_color },
     { span: 'medium_term', title: 'Last six months', color: medium_color },
     { span: 'long_term', title: 'Overall', color: long_color },
-    // { span: 'artists', title: 'Artists' },
+    { span: 'artists', title: 'Artists' },
   ];
   return {
     props: {
@@ -70,9 +70,10 @@ export default function TopTracks({ tracks, token, id, timeSpans }) {
   const handleClick = (range, index) => {
     if (range === 'artists') {
       router.push('/top-artists');
+    } else {
+      setRange(range);
+      setColor(timeSpans[index].color);
     }
-    setRange(range);
-    setColor(timeSpans[index].color);
   };
 
   const createPlaylist = async (name, description) => {
@@ -156,7 +157,7 @@ export default function TopTracks({ tracks, token, id, timeSpans }) {
                 </div>
               </div>
               {data[range].map((track, index) => (
-                <div key={track.name} onClick={() => router.push('/album/' + track.album.id)}>
+                <div key={track.name}>
                   <motion.div
                     variants={cardVariants}
                     initial="hidden"
