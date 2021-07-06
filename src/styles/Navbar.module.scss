@@ -33,6 +33,13 @@
         color: $light-green;
       }
     }
+    .login {
+      margin-left: 2rem;
+      &:hover {
+        cursor: pointer;
+        color: $light-green;
+      }
+    }
     .links {
       margin-left: auto;
       display: flex;
@@ -49,7 +56,7 @@
         &:last-child {
           margin-left: 2rem;
           padding-right: 2rem;
-          border-right: 1px solid $text-primary ;
+          border-right: 1px solid $text-primary;
         }
       }
     }
@@ -93,6 +100,9 @@
       margin-left: 1rem;
     }
   }
+  .login {
+    font-size: 1rem;
+  }
   .menu {
     position: fixed;
     height: 100%;
@@ -118,6 +128,7 @@
         color: inherit;
       }
     }
+
     .close {
       position: absolute;
       top: 0;
