@@ -1,42 +1,41 @@
 @use "sass:math";
 @import '../styles/variables';
 
-
 @font-face {
-  font-family: "PlusJakartaSans";
-  src: url("/fonts/PlusJakartaSans/PlusJakartaSans-Light.ttf");
+  font-family: 'PlusJakartaSans';
+  src: url('/fonts/PlusJakartaSans/PlusJakartaSans-Light.ttf');
   font-style: light;
   font-weight: 300;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "PlusJakartaSans";
-  src: url("/fonts/PlusJakartaSans/PlusJakartaSans-Regular.ttf");
+  font-family: 'PlusJakartaSans';
+  src: url('/fonts/PlusJakartaSans/PlusJakartaSans-Regular.ttf');
   font-style: normal;
   font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "PlusJakartaSans";
-  src: url("/fonts/PlusJakartaSans/PlusJakartaSans-Medium.ttf");
+  font-family: 'PlusJakartaSans';
+  src: url('/fonts/PlusJakartaSans/PlusJakartaSans-Medium.ttf');
   font-style: medium;
   font-weight: 500;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "PlusJakartaSans";
-  src: url("/fonts/PlusJakartaSans/PlusJakartaSans-Bold.ttf");
+  font-family: 'PlusJakartaSans';
+  src: url('/fonts/PlusJakartaSans/PlusJakartaSans-Bold.ttf');
   font-style: bold;
   font-weight: 700;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "PlusJakartaSans";
-  src: url("/fonts/PlusJakartaSans/PlusJakartaSans-ExtraBold.ttf");
+  font-family: 'PlusJakartaSans';
+  src: url('/fonts/PlusJakartaSans/PlusJakartaSans-ExtraBold.ttf');
   font-style: bold;
   font-weight: 900;
   font-display: swap;
@@ -68,7 +67,8 @@ html {
   box-sizing: border-box;
 }
 
-h1, h2 {
+h1,
+h2 {
   font-weight: $black;
 }
 
@@ -145,6 +145,7 @@ h1, h2 {
 }
 
 @mixin button_mixin($background, $background-hover, $border, $border-hover, $size, $color) {
+  font-family: 'PlusJakartaSans', sans-serif;
   background: $background;
   color: $text-primary;
   font-size: $size;
@@ -209,7 +210,6 @@ h1, h2 {
     margin-bottom: 2rem;
   }
 }
-
 
 .border-green {
   border: 1px solid $light-green;

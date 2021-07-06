@@ -2,13 +2,13 @@ import { getSession } from 'next-auth/client';
 import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
 import { getSpotifyData } from '@/lib/http';
 import { cardVariants } from '@/lib/framer';
-import { getColor } from '@/lib/utils';
+import { getColor, numFormatter } from '@/lib/utils';
 import styles from '@/styles/Artists.module.scss';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { spring } from '@/lib/utils';
+import { spring } from '@/lib/framer';
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -160,7 +160,9 @@ export default function TopArtists({ artists, timeSpans }) {
                         ))}
                       </span>
                     </div>
-                    <div className={styles.table__album}>{artist.followers.total}</div>
+                    <div className={styles.table__album}>
+                      {numFormatter(artist.followers.total)}
+                    </div>
                   </motion.div>
                 </div>
               ))}

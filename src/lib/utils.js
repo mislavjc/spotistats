@@ -14,3 +14,11 @@ export const getColor = async url => {
   const color = await ColorThief.getPalette(url, 2);
   return arrToRgb(color[1]);
 };
+
+export const numFormatter = (num, digits) => {
+  const si = { value: 1e3, symbol: 'k' };
+  if (num >= si.value) {
+    return (num / si.value).toFixed(digits).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') + si.symbol;
+  }
+  return num.toString();
+};
