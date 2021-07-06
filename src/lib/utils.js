@@ -16,9 +16,16 @@ export const getColor = async url => {
 };
 
 export const numFormatter = (num, digits) => {
-  const si = { value: 1e3, symbol: 'k' };
-  if (num >= si.value) {
-    return (num / si.value).toFixed(digits).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') + si.symbol;
+  const si = [
+    { value: 1e6, symbol: 'M' },
+    { value: 1e3, symbol: 'k' },
+  ];
+  for (let i = 0; i < si.length; i++) {
+    if (num >= si[i].value) {
+      return (
+        (num / si[i].value).toFixed(digits).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') + si[i].symbol
+      );
+    }
   }
   return num.toString();
 };
