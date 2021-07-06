@@ -43,6 +43,15 @@
           cursor: pointer;
         }
       }
+      height: auto;
+      h3 {
+        margin: 0;
+        &:last-child {
+          margin-left: 2rem;
+          padding-right: 2rem;
+          border-right: 1px solid $text-primary ;
+        }
+      }
     }
   }
   .menuIcon {
@@ -55,10 +64,9 @@
 }
 
 .account {
-  border-left: 1px solid white;
   display: flex;
   align-items: center;
-  padding-left: 1rem;
+  padding-left: 2rem;
   h3 {
     margin-left: 1rem;
     font-weight: $bold;

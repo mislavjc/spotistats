@@ -75,7 +75,7 @@ export const textVariants = {
     transition: {
       delay: index * 0.015,
       type: 'tween',
-      duration: 0.5,
+      duration: 0.4,
     },
   }),
   exit: {

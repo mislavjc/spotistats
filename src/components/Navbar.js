@@ -24,10 +24,10 @@ const Navbar = () => {
           </div>
           <div className={styles.links}>
             <Link href="/top-tracks" passHref>
-              <h3>Tracks</h3>
+              <motion.h3 variants={textVariants} initial="hidden" animate="visible" custom={0}  >Tracks</motion.h3>
             </Link>
             <Link href="/top-artists" passHref>
-              <h3>Artists</h3>
+              <motion.h3 variants={textVariants} initial="hidden" animate="visible" custom={1}>Artists</motion.h3>
             </Link>
           </div>
           <div>
