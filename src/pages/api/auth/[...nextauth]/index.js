@@ -9,6 +9,9 @@ export default NextAuth({
       scope: 'user-top-read user-library-read playlist-modify-private',
     }),
   ],
+  pages: {
+    signIn: '/signin',
+  },
   callbacks: {
     async jwt(token, _, account) {
       if (account) {

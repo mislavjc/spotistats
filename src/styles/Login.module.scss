@@ -1,0 +1,36 @@
+@import '../styles/variables';
+
+.container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $text-primary;
+  text-align: center;
+  padding: 1rem;
+  h1 {
+    color: $bg-primary;
+    line-height: 3rem;
+  }
+  p {
+    color: $gray;
+    font-weight: $medium;
+  }
+  & > div {
+    max-width: 30rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  button {
+    margin: 1rem 0;
+  }
+  a {
+    color: $gray-secondary;
+    &:hover {
+      color: $green;
+    }
+  }
+}
