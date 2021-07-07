@@ -1,9 +1,15 @@
-import { getProviders, signIn } from 'next-auth/client';
+import { getProviders, signIn, getSession } from 'next-auth/client';
 import Link from 'next/link';
 import styles from '@/styles/Login.module.scss';
 
 export async function getServerSideProps(context) {
   const providers = await getProviders();
+  const session = await getSession(context);
+  if (session) {
+    context.res.writeHead(302, { Location: '/top-songs' });
+    context.res.end();
+    return;
+  }
   return {
     props: { providers },
   };
@@ -29,4 +35,3 @@ export default function SignIn({ providers }) {
     </div>
   );
 }
-
