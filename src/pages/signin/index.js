@@ -1,21 +1,25 @@
 import { getProviders, signIn, getSession } from 'next-auth/client';
+import { useEffect } from 'react';
+import {}
 import Link from 'next/link';
 import styles from '@/styles/Login.module.scss';
 
 export async function getServerSideProps(context) {
   const providers = await getProviders();
   const session = await getSession(context);
-  if (session) {
-    context.res.writeHead(302, { Location: '/top-songs' });
-    context.res.end();
-    return;
-  }
   return {
-    props: { providers },
+    props: { providers, session },
   };
 }
 
-export default function SignIn({ providers }) {
+export default function SignIn({ providers, session }) {
+  const {router} = useRouter();
+  useEffect(() => {
+    if (session) {
+      router.back();
+    }
+  }, [])
+
   return (
     <div className={styles.container}>
       <div>
