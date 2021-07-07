@@ -5,18 +5,18 @@ import { useEffect } from 'react';
 
 export async function getServerSideProps(context) {
   const providers = await getProviders();
+  let redirectUrl = process.env.NEXTAUTH_URL;
   return {
-    props: { providers },
+    props: { providers, redirectUrl },
   };
 }
 
-export default function SignIn({ providers }) {
-  let redirectUrl = 'http://location:3000';
-
+export default function SignIn({ providers, redirectUrl }) {
   useEffect(() => {
     const url = new URL(location.href);
     redirectUrl = url.searchParams.get('callbackUrl');
   }, []);
+
   return (
     <div className={styles.container}>
       <div>
