@@ -25,6 +25,12 @@ export default NextAuth({
       return session;
     },
   },
+  jwt: {
+    signingKey: process.env.JWT_SIGNING_PRIVATE_KEY,
+    verificationOptions: {
+      maxTokenAge: '3000s',
+    },
+  },
   session: {
     maxAge: 3000,
   },
