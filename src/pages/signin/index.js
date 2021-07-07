@@ -1,6 +1,6 @@
 import { getProviders, signIn, getSession } from 'next-auth/client';
 import { useEffect } from 'react';
-import {}
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styles from '@/styles/Login.module.scss';
 
