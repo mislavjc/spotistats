@@ -13,12 +13,12 @@ export async function getServerSideProps(context) {
 }
 
 export default function SignIn({ providers, session }) {
-  const {router} = useRouter();
+  const { router } = useRouter();
   useEffect(() => {
     if (session) {
       router.back();
     }
-  }, [])
+  }, []);
 
   return (
     <div className={styles.container}>
