@@ -17,3 +17,12 @@ export const postSpotifyData = async (url, token, data) => {
   });
   return res;
 };
+
+export const getArtistData = async (id, token) => {
+  const { data: res } = await axios.get(`https://api.spotify.com/v1/artists/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res;
+};

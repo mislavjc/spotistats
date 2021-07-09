@@ -2,7 +2,7 @@ import { getSession } from 'next-auth/client';
 import { useState } from 'react';
 import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { getSpotifyData } from '@/lib/http';
+import { getSpotifyData, getArtistData } from '@/lib/http';
 import { cardVariants, modalVariants, spring } from '@/lib/framer';
 import axios from 'axios';
 import Image from 'next/image';
@@ -35,6 +35,18 @@ export async function getServerSideProps(context) {
       session.user.accessToken,
     ),
   };
+  const short_artist = await getArtistData(
+    tracks.short_term[0].artists[0].id,
+    session.user.accessToken,
+  );
+  const medium_artist = await getArtistData(
+    tracks.medium_term[0].artists[0].id,
+    session.user.accessToken,
+  );
+  const long_artist = await getArtistData(
+    tracks.long_term[0].artists[0].id,
+    session.user.accessToken,
+  );
   const short_color = await getColor(tracks.short_term[0].album.images[0].url, 2);
   const medium_color = await getColor(tracks.medium_term[0].album.images[0].url, 2);
   const long_color = await getColor(tracks.long_term[0].album.images[0].url, 2);
@@ -43,6 +55,7 @@ export async function getServerSideProps(context) {
       span: 'short_term',
       title: 'Last month',
       color: short_color,
+      cover: short_artist.images[1].url,
       pathTop:
         'M0,288L48,240C96,192,192,96,288,64C384,32,480,64,576,69.3C672,75,768,53,864,48C960,43,1056,53,1152,74.7C1248,96,1344,128,1392,144L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z',
       pathBottom:
@@ -52,6 +65,7 @@ export async function getServerSideProps(context) {
       span: 'medium_term',
       title: 'Last six months',
       color: medium_color,
+      cover: medium_artist.images[1].url,
       pathTop:
         'M0,64L48,64C96,64,192,64,288,85.3C384,107,480,149,576,176C672,203,768,213,864,208C960,203,1056,181,1152,186.7C1248,192,1344,224,1392,240L1440,256L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z',
       pathBottom:
@@ -61,6 +75,7 @@ export async function getServerSideProps(context) {
       span: 'long_term',
       title: 'Overall',
       color: long_color,
+      cover: long_artist.images[1].url,
       pathTop:
         'M0,64L48,90.7C96,117,192,171,288,170.7C384,171,480,117,576,106.7C672,96,768,128,864,165.3C960,203,1056,245,1152,240C1248,235,1344,181,1392,154.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z',
       pathBottom:
@@ -93,6 +108,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
   const [color, setColor] = useState(timeSpans[0].color);
   const [pathTop, setPathTop] = useState(timeSpans[0].pathTop);
   const [pathBottom, setPathBottom] = useState(timeSpans[0].pathBottom);
+  const [cover, setCover] = useState(timeSpans[0].cover);
 
   const handleClick = (range, index) => {
     if (range === 'artists') {
@@ -102,6 +118,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
       setColor(timeSpans[index].color);
       setPathTop(timeSpans[index].pathTop);
       setPathBottom(timeSpans[index].pathBottom);
+      setCover(timeSpans[index].cover);
     }
   };
 
@@ -155,35 +172,8 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
                 ></motion.path>
               </svg>
             </div>
-            <div className={styles.header__container}>
-              <div>
-                <Image
-                  src={data[range][0].album.images[0].url}
-                  alt="cover image"
-                  height={125}
-                  width={125}
-                />
-                <Image
-                  src={data[range][1].album.images[0].url}
-                  alt="cover image"
-                  height={125}
-                  width={125}
-                />
-              </div>
-              <div>
-                <Image
-                  src={data[range][2].album.images[0].url}
-                  alt="cover image"
-                  height={125}
-                  width={125}
-                />
-                <Image
-                  src={data[range][3].album.images[0].url}
-                  alt="cover image"
-                  height={125}
-                  width={125}
-                />
-              </div>
+            <div>
+              <Image src={cover} alt="cover image" height={250} width={250} />
             </div>
             <div className={styles.wave__bottom}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
