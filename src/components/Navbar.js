@@ -24,10 +24,14 @@ const Navbar = () => {
           </div>
           <div className={styles.links}>
             <Link href="/top-tracks" passHref>
-              <motion.h3 variants={textVariants} initial="hidden" animate="visible" custom={0}  >Tracks</motion.h3>
+              <motion.h3 variants={textVariants} initial="hidden" animate="visible" custom={0}>
+                Tracks
+              </motion.h3>
             </Link>
             <Link href="/top-artists" passHref>
-              <motion.h3 variants={textVariants} initial="hidden" animate="visible" custom={1}>Artists</motion.h3>
+              <motion.h3 variants={textVariants} initial="hidden" animate="visible" custom={1}>
+                Artists
+              </motion.h3>
             </Link>
           </div>
           <div>
@@ -35,7 +39,7 @@ const Navbar = () => {
               <div className={styles.account}>
                 <Image
                   className={styles.avatar}
-                  src={session.user.picture}
+                  src={session.user.picture || '/icons/account.svg'}
                   width={40}
                   height={40}
                   alt="user profile picture"
