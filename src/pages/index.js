@@ -10,7 +10,7 @@ export default function Home() {
           <h1>Get your statistics</h1>
           <p>See what tracks were your most listened.</p>
           <Link href="/top-tracks" passHref>
-            <button className="btn">OPEN STATISTICS</button> 
+            <button className="btn">OPEN STATISTICS</button>
           </Link>
         </div>
       </div>
