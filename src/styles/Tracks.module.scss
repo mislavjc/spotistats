@@ -32,7 +32,7 @@
       position: relative;
       .wave__top {
         position: absolute;
-        bottom: 200px;
+        bottom: 191.44px;
         z-index: 1;
         width: 100%;
         margin: 0;
@@ -58,6 +58,9 @@
   &__container {
     display: flex;
     flex-direction: column;
+    div {
+      height: 125px;
+    }
   }
 }
 
@@ -76,7 +79,8 @@
   bottom: 20px;
   left: 20px;
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
+  font-weight: $black;
   color: black;
 }
 

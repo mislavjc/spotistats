@@ -43,13 +43,29 @@ export async function getServerSideProps(context) {
       span: 'short_term',
       title: 'Last month',
       color: short_color,
+      pathTop:
+        'M0,288L48,240C96,192,192,96,288,64C384,32,480,64,576,69.3C672,75,768,53,864,48C960,43,1056,53,1152,74.7C1248,96,1344,128,1392,144L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z',
+      pathBottom:
+        'M0,0L48,16C96,32,192,64,288,96C384,128,480,160,576,149.3C672,139,768,85,864,80C960,75,1056,117,1152,117.3C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z',
     },
     {
       span: 'medium_term',
       title: 'Last six months',
       color: medium_color,
+      pathTop:
+        'M0,64L48,64C96,64,192,64,288,85.3C384,107,480,149,576,176C672,203,768,213,864,208C960,203,1056,181,1152,186.7C1248,192,1344,224,1392,240L1440,256L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z',
+      pathBottom:
+        'M0,64L48,85.3C96,107,192,149,288,144C384,139,480,85,576,90.7C672,96,768,160,864,170.7C960,181,1056,139,1152,149.3C1248,160,1344,224,1392,256L1440,288L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z',
     },
-    { span: 'long_term', title: 'Overall', color: long_color },
+    {
+      span: 'long_term',
+      title: 'Overall',
+      color: long_color,
+      pathTop:
+        'M0,64L48,90.7C96,117,192,171,288,170.7C384,171,480,117,576,106.7C672,96,768,128,864,165.3C960,203,1056,245,1152,240C1248,235,1344,181,1392,154.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z',
+      pathBottom:
+        'M0,64L48,101.3C96,139,192,213,288,208C384,203,480,117,576,80C672,43,768,53,864,48C960,43,1056,21,1152,32C1248,43,1344,85,1392,106.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z',
+    },
     { span: 'artists', title: 'Artists' },
   ];
   return {
@@ -75,6 +91,8 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
   const [playlistTitle, setPlaylistTitle] = useState('');
   const [range, setRange] = useState(timeSpans[0].span);
   const [color, setColor] = useState(timeSpans[0].color);
+  const [pathTop, setPathTop] = useState(timeSpans[0].pathTop);
+  const [pathBottom, setPathBottom] = useState(timeSpans[0].pathBottom);
 
   const handleClick = (range, index) => {
     if (range === 'artists') {
@@ -82,6 +100,8 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
     } else {
       setRange(range);
       setColor(timeSpans[index].color);
+      setPathTop(timeSpans[index].pathTop);
+      setPathBottom(timeSpans[index].pathBottom);
     }
   };
 
@@ -127,11 +147,12 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
           <span>
             <div className={styles.wave__top}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path
-                  fill={color}
+                <motion.path
+                  initial={false}
+                  animate={{ fill: color }}
                   fillOpacity="0.9"
-                  d="M0,288L48,240C96,192,192,96,288,64C384,32,480,64,576,69.3C672,75,768,53,864,48C960,43,1056,53,1152,74.7C1248,96,1344,128,1392,144L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-                ></path>
+                  d={pathTop}
+                ></motion.path>
               </svg>
             </div>
             <div className={styles.header__container}>
@@ -166,14 +187,19 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
             </div>
             <div className={styles.wave__bottom}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path
-                  fill={color}
+                <motion.path
+                  initial={false}
+                  animate={{ fill: color }}
                   fillOpacity="0.9"
-                  d="M0,0L48,16C96,32,192,64,288,96C384,128,480,160,576,149.3C672,139,768,85,864,80C960,75,1056,117,1152,117.3C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-                ></path>
+                  d={pathBottom}
+                ></motion.path>
               </svg>
             </div>
-            <div className={styles.wave__cover} style={{ background: color }} />
+            <motion.div
+              className={styles.wave__cover}
+              initial={false}
+              animate={{ background: color }}
+            />
             <h1 className={styles.wave__title}>Top songs</h1>
           </span>
         </div>
