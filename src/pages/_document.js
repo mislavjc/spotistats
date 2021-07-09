@@ -12,7 +12,9 @@ class MyDocument extends Document {
             content="Find your Spotify listening habbits and statistics."
           />
           <meta name="theme-color" content="#282828" />
-          <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+          <link rel="manifest" href="/manifest.json" />
+          <link rel="apple-touch-icon" href="/icon.png"></link>
+          <meta name="theme-color" content="#33333" />
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
           <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
           <link rel="manifest" href="/favicon/site.webmanifest" />

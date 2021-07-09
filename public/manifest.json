@@ -1,0 +1,22 @@
+{
+  "name": "Spotistats",
+  "short_name": "Spotistats",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#FFFFFF",
+  "background_color": "#333333",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}
