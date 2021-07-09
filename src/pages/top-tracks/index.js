@@ -109,6 +109,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
   const [pathTop, setPathTop] = useState(timeSpans[0].pathTop);
   const [pathBottom, setPathBottom] = useState(timeSpans[0].pathBottom);
   const [cover, setCover] = useState(timeSpans[0].cover);
+  const [error, setError] = useState(false);
 
   const handleClick = (range, index) => {
     if (range === 'artists') {
@@ -124,14 +125,21 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
 
   const createPlaylist = async (name, description) => {
     const playlistData = data[range];
-    axios.post('/api/create-playlist', { id, token, playlistData, name, description }).then(res => {
-      setOpen(true);
-      setShowForm(false);
-      setPlaylistTitle(name);
-      setName('');
-      setDescription('');
-      setUrl(res.data);
-    });
+    if (name) {
+      axios
+        .post('/api/create-playlist', { id, token, playlistData, name, description })
+        .then(res => {
+          setOpen(true);
+          setShowForm(false);
+          setPlaylistTitle(name);
+          setName('');
+          setDescription('');
+          setUrl(res.data);
+        });
+    } else {
+      console.log('no name');
+      setError(true);
+    }
   };
 
   return (
@@ -150,6 +158,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
             onClick={() => {
               setShowForm(false);
               setOpen(false);
+              setError(false);
             }}
           />
         )}
@@ -311,6 +320,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
               <input
                 id="playlist-title"
                 placeholder="Add a name*"
+                className={error && 'inputError'}
                 value={name}
                 onChange={e => setName(e.target.value)}
               />
