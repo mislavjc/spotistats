@@ -12,7 +12,7 @@ export const arrToRgb = arr => {
 
 export const getColor = async url => {
   const color = await ColorThief.getPalette(url, 2);
-  return arrToRgb(color[1]);
+  return  arrToRgb(color[1]);
 };
 
 export const numFormatter = (num, digits) => {
@@ -28,4 +28,17 @@ export const numFormatter = (num, digits) => {
     }
   }
   return num.toString();
+};
+
+export const getTotalLenght = arr => {
+  let totalLenght = 0;
+  arr.map(track => {
+    totalLenght += track.duration_ms;
+  });
+  const msToTime = duration => {
+    const minutes = Math.floor((duration / (1000 * 60)) % 60);
+    const hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+    return hours + ' hr ' + minutes + ' min';
+  };
+  return msToTime(totalLenght);
 };
