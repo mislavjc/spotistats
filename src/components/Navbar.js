@@ -21,8 +21,6 @@ const Navbar = () => {
                 Spotistats<sup>beta</sup>
               </h1>
             </Link>
-            <p>{session && <h1>{session.user.picture}</h1>}</p>
-            <p>{session && <h1>{typeof(session.user.picture)}</h1>}</p>
           </div>
           <div className={styles.links}>
             <Link href="/top-tracks" passHref>
