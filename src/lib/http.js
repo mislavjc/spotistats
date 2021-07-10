@@ -6,6 +6,9 @@ export const getSpotifyData = async (url, token) => {
       Authorization: `Bearer ${token}`,
     },
   });
+  if (url === '/me') {
+    return data;
+  }
   return data.items;
 };
 
@@ -25,4 +28,16 @@ export const getArtistData = async (id, token) => {
     },
   });
   return res;
+};
+
+export const getArtistTopTracks = async (id, country, token, amount) => {
+  const { data: res } = await axios.get(
+    `https://api.spotify.com/v1/artists/${id}/top-tracks?market=${country}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return res.tracks.slice(0, amount);
 };

@@ -320,7 +320,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
               <input
                 id="playlist-title"
                 placeholder="Add a name*"
-                className={error && 'inputError'}
+                className={error ? 'inputError' : undefined}
                 value={name}
                 onChange={e => setName(e.target.value)}
               />

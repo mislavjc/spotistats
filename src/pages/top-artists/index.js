@@ -1,14 +1,14 @@
 import { getSession } from 'next-auth/client';
 import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
 import { getSpotifyData } from '@/lib/http';
-import { cardVariants } from '@/lib/framer';
 import { getColor, numFormatter } from '@/lib/utils';
 import styles from '@/styles/Artists.module.scss';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { spring } from '@/lib/framer';
+import { cardVariants, modalVariants, spring } from '@/lib/framer';
+import axios from 'axios';
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -72,21 +72,28 @@ export async function getServerSideProps(context) {
     props: {
       artists,
       timeSpans,
+      token: session.user.accessToken,
+      id: session.user.id,
       username: session.user.name,
     },
   };
 }
 
-export default function TopArtists({ artists, timeSpans, username }) {
+export default function TopArtists({ artists, timeSpans, token, id, username }) {
   const router = useRouter();
   const [data, setData] = useState(artists);
   const [open, setOpen] = useState(false);
+  const [url, setUrl] = useState('');
   const [showForm, setShowForm] = useState(false);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const [selected, setSelected] = useState(timeSpans[0]);
+  const [playlistTitle, setPlaylistTitle] = useState('');
   const [range, setRange] = useState(timeSpans[0].span);
   const [color, setColor] = useState(timeSpans[0].color);
   const [pathTop, setPathTop] = useState(timeSpans[0].pathTop);
   const [pathBottom, setPathBottom] = useState(timeSpans[0].pathBottom);
+  const [error, setError] = useState(false);
 
   const handleClick = (range, index) => {
     if (range === 'tracks') {
@@ -96,6 +103,24 @@ export default function TopArtists({ artists, timeSpans, username }) {
       setColor(timeSpans[index].color);
       setPathTop(timeSpans[index].pathTop);
       setPathBottom(timeSpans[index].pathBottom);
+    }
+  };
+
+  const createPlaylist = async (name, description) => {
+    const playlistData = data[range];
+    if (name) {
+      axios
+        .post('/api/create-artist-playlist', { id, token, playlistData, name, description })
+        .then(res => {
+          setOpen(true);
+          setShowForm(false);
+          setPlaylistTitle(name);
+          setName('');
+          setDescription('');
+          setUrl(res.data);
+        });
+    } else {
+      setError(true);
     }
   };
 
@@ -227,6 +252,11 @@ export default function TopArtists({ artists, timeSpans, username }) {
             ))}
           </div>
         </AnimateSharedLayout>
+        <div className="fab-btn">
+          <button className="btn" variant="outlined" onClick={() => setShowForm(true)}>
+            Create playlist
+          </button>
+        </div>
         <AnimateSharedLayout>
           <AnimatePresence>
             <div className={styles.table}>
@@ -275,6 +305,58 @@ export default function TopArtists({ artists, timeSpans, username }) {
             </div>
           </AnimatePresence>
         </AnimateSharedLayout>
+        <AnimatePresence>
+          {showForm && (
+            <motion.div
+              variants={modalVariants}
+              className="modal playlist-modal"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              key="playlist-modal"
+            >
+              <h2>Create a playlist</h2>
+              <input
+                id="playlist-title"
+                placeholder="Add a name*"
+                className={error ? 'inputError' : undefined}
+                value={name}
+                onChange={e => setName(e.target.value)}
+              />
+              <input
+                id="playlist-description"
+                placeholder="Add an optional description"
+                value={description}
+                onChange={e => setDescription(e.target.value)}
+              />
+              <div className="button__container">
+                <button onClick={() => createPlaylist(name, description)} className="btn-sm">
+                  Create
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              variants={modalVariants}
+              className="modal modal-light playlist-modal"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              key="playlist-created-modal"
+            >
+              <h2>Playlist created successfully!</h2>
+              <p>{playlistTitle} was added to your library.</p>
+              <div className="button__container">
+                <button onClick={() => window.open(url, '_blank')} className="btn-sm-green">
+                  Open playlist
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );
