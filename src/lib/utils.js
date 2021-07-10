@@ -12,7 +12,7 @@ export const arrToRgb = arr => {
 
 export const getColor = async url => {
   const color = await ColorThief.getPalette(url, 2);
-  return  arrToRgb(color[1]);
+  return arrToRgb(color[1]);
 };
 
 export const numFormatter = (num, digits) => {
@@ -41,4 +41,15 @@ export const getTotalLenght = arr => {
     return hours + ' hr ' + minutes + ' min';
   };
   return msToTime(totalLenght);
+};
+
+export const featuredArtists = arr => {
+  const firstArtist = arr[0].artists[0].name;
+  let secondArtist = arr[1].artists[0].name;
+  let i = 2;
+  while (firstArtist === secondArtist) {
+    secondArtist = arr[i].artists[0].name;
+    i++;
+  }
+  return [firstArtist, secondArtist];
 };

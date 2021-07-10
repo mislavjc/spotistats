@@ -6,7 +6,7 @@ import { getSpotifyData, getArtistData } from '@/lib/http';
 import { cardVariants, modalVariants, spring } from '@/lib/framer';
 import axios from 'axios';
 import Image from 'next/image';
-import { millisToMinutesAndSeconds, getColor, getTotalLenght } from '@/lib/utils';
+import { millisToMinutesAndSeconds, getColor, getTotalLenght, featuredArtists } from '@/lib/utils';
 import styles from '@/styles/Tracks.module.scss';
 import Head from 'next/head';
 
@@ -206,12 +206,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
           <h5>Playlist</h5>
           <h1 className={styles.pageTitle}>Top songs</h1>
           <p>
-            {data[range].slice(0, 2).map((track, index) => (
-              <span key={track.id}>
-                {track.artists[0].name}
-                {index === 1 ? ' and more' : ', '}
-              </span>
-            ))}
+            {featuredArtists(data[range])[0]}, {featuredArtists(data[range])[1]} and more
           </p>
           <p className={styles.header__description}>
             Made for &nbsp;<span className={styles.header__username}>{username}</span>
