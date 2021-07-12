@@ -48,7 +48,7 @@ const Navbar = () => {
                 <h3>Profile</h3>
               </div>
             ) : (
-              <h3 className={styles.login} onClick={() => signIn}>
+              <h3 className={styles.login} onClick={() => signIn()}>
                 Sign in
               </h3>
             )}
@@ -96,7 +96,7 @@ const Navbar = () => {
                   </motion.p>
                 </>
               ) : (
-                <motion.p variants={textVariants} custom={5} onClick={() => signIn}>
+                <motion.p variants={textVariants} custom={5} onClick={() => signIn()}>
                   Sign in
                 </motion.p>
               )}
