@@ -3,7 +3,7 @@ export const cardVariants = {
     opacity: 0,
     y: -50,
   },
-  visible: index => ({
+  visible: (index: number) => ({
     opacity: 1,
     y: 0,
     transition: {
@@ -69,7 +69,7 @@ export const textVariants = {
     x: 100,
     opacity: 0,
   },
-  visible: index => ({
+  visible: (index: number) => ({
     x: 0,
     opacity: 1,
     transition: {

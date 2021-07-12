@@ -9,9 +9,11 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { cardVariants, modalVariants, spring } from '@/lib/framer';
 import axios from 'axios';
+import { GetServerSideProps } from 'next';
+import { ArtistProps, Artists } from '@/types/artist-types';
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
+export const getServerSideProps: GetServerSideProps = async context => {
+  const session: any = await getSession(context);
   if (!session) {
     context.res.writeHead(302, { Location: '/api/auth/signin' });
     context.res.end();
@@ -21,23 +23,23 @@ export async function getServerSideProps(context) {
       },
     };
   }
-  const artists = {
+  const artists: Artists = {
     short_term: await getSpotifyData(
       '/me/top/artists?time_range=short_term&limit=30',
-      session.user.accessToken,
+      session?.user?.accessToken,
     ),
     medium_term: await getSpotifyData(
       '/me/top/artists?time_range=medium_term&limit=30',
-      session.user.accessToken,
+      session?.user?.accessToken,
     ),
     long_term: await getSpotifyData(
       '/me/top/artists?time_range=long_term&limit=30',
-      session.user.accessToken,
+      session?.user?.accessToken,
     ),
   };
-  const short_color = await getColor(artists.short_term[0].images[0].url, 2);
-  const medium_color = await getColor(artists.medium_term[0].images[0].url, 2);
-  const long_color = await getColor(artists.long_term[0].images[0].url, 2);
+  const short_color = await getColor(artists?.short_term[0]?.images[0]?.url);
+  const medium_color = await getColor(artists.medium_term[0].images[0].url);
+  const long_color = await getColor(artists.long_term[0].images[0].url);
   const timeSpans = [
     {
       span: 'short_term',
@@ -72,14 +74,14 @@ export async function getServerSideProps(context) {
     props: {
       artists,
       timeSpans,
-      token: session.user.accessToken,
-      id: session.user.id,
-      username: session.user.name,
+      token: session?.user?.accessToken,
+      id: session?.user?.id,
+      username: session?.user?.name,
     },
   };
-}
+};
 
-export default function TopArtists({ artists, timeSpans, token, id, username }) {
+export default function TopArtists({ artists, timeSpans, token, id, username }: ArtistProps) {
   const router = useRouter();
   const [data, setData] = useState(artists);
   const [open, setOpen] = useState(false);
@@ -95,7 +97,7 @@ export default function TopArtists({ artists, timeSpans, token, id, username }) 
   const [pathBottom, setPathBottom] = useState(timeSpans[0].pathBottom);
   const [error, setError] = useState(false);
 
-  const handleClick = (range, index) => {
+  const handleClick = (range: string, index: number) => {
     if (range === 'tracks') {
       router.push('/top-tracks');
     } else {
@@ -106,7 +108,7 @@ export default function TopArtists({ artists, timeSpans, token, id, username }) 
     }
   };
 
-  const createPlaylist = async (name, description) => {
+  const createPlaylist = async (name: string, description: string) => {
     const playlistData = data[range];
     if (name) {
       axios
@@ -253,7 +255,7 @@ export default function TopArtists({ artists, timeSpans, token, id, username }) 
           </div>
         </AnimateSharedLayout>
         <div className="fab-btn">
-          <button className="btn" variant="outlined" onClick={() => setShowForm(true)}>
+          <button className="btn" onClick={() => setShowForm(true)}>
             Create playlist
           </button>
         </div>
@@ -297,7 +299,7 @@ export default function TopArtists({ artists, timeSpans, token, id, username }) 
                       </span>
                     </div>
                     <div className={styles.table__album}>
-                      {numFormatter(artist.followers.total)}
+                      {numFormatter(artist.followers.total, 1)}
                     </div>
                   </motion.div>
                 </div>

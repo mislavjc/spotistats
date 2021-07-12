@@ -9,9 +9,12 @@ import Image from 'next/image';
 import { millisToMinutesAndSeconds, getColor, getTotalLenght, featuredArtists } from '@/lib/utils';
 import styles from '@/styles/Tracks.module.scss';
 import Head from 'next/head';
+import { GetServerSideProps } from 'next';
+import { Tracks, Artist, Item, TrackProps } from '@/types/track-types';
+import { TimeSpan } from '@/types/shared-types';
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
+export const getServerSideProps: GetServerSideProps = async context => {
+  const session: any = await getSession(context);
   if (!session) {
     context.res.writeHead(302, { Location: '/api/auth/signin' });
     context.res.end();
@@ -21,36 +24,36 @@ export async function getServerSideProps(context) {
       },
     };
   }
-  const tracks = {
+  const tracks: Tracks = {
     short_term: await getSpotifyData(
       '/me/top/tracks?time_range=short_term&limit=30',
-      session.user.accessToken,
+      session?.user?.accessToken,
     ),
     medium_term: await getSpotifyData(
       '/me/top/tracks?time_range=medium_term&limit=30',
-      session.user.accessToken,
+      session?.user?.accessToken,
     ),
     long_term: await getSpotifyData(
       '/me/top/tracks?time_range=long_term&limit=30',
-      session.user.accessToken,
+      session!.user!.accessToken,
     ),
   };
   const short_artist = await getArtistData(
-    tracks.short_term[0].artists[0].id,
-    session.user.accessToken,
+    tracks!.short_term[0]!.artists[0]!.id,
+    session?.user?.accessToken,
   );
   const medium_artist = await getArtistData(
-    tracks.medium_term[0].artists[0].id,
-    session.user.accessToken,
+    tracks!.medium_term[0]!.artists[0]!.id,
+    session?.user?.accessToken,
   );
   const long_artist = await getArtistData(
     tracks.long_term[0].artists[0].id,
-    session.user.accessToken,
+    session?.user?.accessToken,
   );
-  const short_color = await getColor(tracks.short_term[0].album.images[0].url, 2);
-  const medium_color = await getColor(tracks.medium_term[0].album.images[0].url, 2);
-  const long_color = await getColor(tracks.long_term[0].album.images[0].url, 2);
-  const timeSpans = [
+  const short_color = await getColor(tracks.short_term[0].album.images[0].url);
+  const medium_color = await getColor(tracks.medium_term[0].album.images[0].url);
+  const long_color = await getColor(tracks.long_term[0].album.images[0].url);
+  const timeSpans: TimeSpan[] = [
     {
       span: 'short_term',
       title: 'Last month',
@@ -81,22 +84,27 @@ export async function getServerSideProps(context) {
       pathBottom:
         'M0,64L48,101.3C96,139,192,213,288,208C384,203,480,117,576,80C672,43,768,53,864,48C960,43,1056,21,1152,32C1248,43,1344,85,1392,106.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z',
     },
-    { span: 'artists', title: 'Artists' },
+    { span: 'artists', title: 'Artists',   color: long_color,
+      cover: long_artist.images[1].url,
+      pathTop:
+        'M0,64L48,90.7C96,117,192,171,288,170.7C384,171,480,117,576,106.7C672,96,768,128,864,165.3C960,203,1056,245,1152,240C1248,235,1344,181,1392,154.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z',
+      pathBottom:
+        'M0,64L48,101.3C96,139,192,213,288,208C384,203,480,117,576,80C672,43,768,53,864,48C960,43,1056,21,1152,32C1248,43,1344,85,1392,106.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z', },
   ];
   return {
     props: {
       tracks,
       timeSpans,
-      token: session.user.accessToken,
-      id: session.user.id,
-      username: session.user.name,
+      token: session?.user?.accessToken,
+      id: session?.user?.id,
+      username: session?.user?.name,
     },
   };
-}
+};
 
-export default function TopTracks({ tracks, token, id, timeSpans, username }) {
+export default function TopTracks({ tracks, token, id, timeSpans, username } : TrackProps) {
   const router = useRouter();
-  const [data, setData] = useState(tracks);
+  const [data, setData] = useState<Tracks>(tracks);
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState('');
   const [showForm, setShowForm] = useState(false);
@@ -111,7 +119,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
   const [cover, setCover] = useState(timeSpans[0].cover);
   const [error, setError] = useState(false);
 
-  const handleClick = (range, index) => {
+  const handleClick = (range: string, index: number) => {
     if (range === 'artists') {
       router.push('/top-artists');
     } else {
@@ -123,8 +131,8 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
     }
   };
 
-  const createPlaylist = async (name, description) => {
-    const playlistData = data[range];
+  const createPlaylist = async (name: string, description: string) => {
+    const playlistData: Item[] = data[range];
     if (name) {
       axios
         .post('/api/create-playlist', { id, token, playlistData, name, description })
@@ -217,7 +225,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
       <div className="container">
         <AnimateSharedLayout>
           <div className="chip-container">
-            {timeSpans.map((time, index) => (
+            {timeSpans.map((time, index: number) => (
               <button
                 key={time.span}
                 className="chip-outlined"
@@ -240,7 +248,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
           </div>
         </AnimateSharedLayout>
         <div className="fab-btn">
-          <button className="btn" variant="outlined" onClick={() => setShowForm(true)}>
+          <button className="btn" onClick={() => setShowForm(true)}>
             Create playlist
           </button>
         </div>
@@ -256,7 +264,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
                   <Image src="/icons/time.svg" alt="time icon" width={14} height={14} />
                 </div>
               </div>
-              {data[range].map((track, index) => (
+              {data[range].map((track: Item, index: number) => (
                 <div key={track.name}>
                   <motion.div
                     variants={cardVariants}
@@ -281,7 +289,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }) {
                       <span className={styles.artists}>
                         {track.explicit && <span className={styles.explicit}>E</span>}
                         <span>
-                          {track.artists.map((artist, index) => (
+                          {track.artists.map((artist: Artist, index: number) => (
                             <span key={artist.name}>
                               {track.artists.length > 1
                                 ? track.artists.length !== index + 1

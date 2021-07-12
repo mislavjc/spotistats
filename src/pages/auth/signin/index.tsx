@@ -1,17 +1,18 @@
-import { getProviders, signIn } from 'next-auth/client';
+import { ClientSafeProvider, getProviders, signIn } from 'next-auth/client';
 import Link from 'next/link';
 import styles from '@/styles/Login.module.scss';
 import { useEffect } from 'react';
+import { GetServerSideProps } from 'next';
 
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async () => {
   const providers = await getProviders();
   let redirectUrl = process.env.NEXTAUTH_URL;
   return {
     props: { providers, redirectUrl },
   };
-}
+};
 
-export default function SignIn({ providers, redirectUrl }) {
+export default function SignIn({ providers, redirectUrl }: any) {
   useEffect(() => {
     const url = new URL(location.href);
     redirectUrl = url.searchParams.get('callbackUrl');
@@ -21,7 +22,7 @@ export default function SignIn({ providers, redirectUrl }) {
     <div className={styles.container}>
       <div>
         <h1>Spotistats requires a Spotify account in order to work.</h1>
-        {Object.values(providers).map(provider => (
+        {Object.values(providers).map((provider: any) => (
           <div key={provider.name}>
             <button
               className="btn"

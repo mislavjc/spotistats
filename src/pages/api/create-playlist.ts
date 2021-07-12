@@ -1,6 +1,7 @@
 import { postSpotifyData } from '@/lib/http';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-const createPlaylistHandler = async (req, res) => {
+const createPlaylistHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     const { id, token, playlistData, name, description } = req.body;
     const playlistInfo = {

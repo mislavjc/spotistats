@@ -39,7 +39,8 @@ const Navbar = () => {
               <div className={styles.account}>
                 <Image
                   className={styles.avatar}
-                  src={session.user.picture || '/icons/account.svg'}
+                  // @ts-ignore
+                  src={session!.user!.picture || '/icons/account.svg'}
                   width={40}
                   height={40}
                   alt="user profile picture"
@@ -47,7 +48,7 @@ const Navbar = () => {
                 <h3>Profile</h3>
               </div>
             ) : (
-              <h3 className={styles.login} onClick={signIn}>
+              <h3 className={styles.login} onClick={() => signIn}>
                 Sign in
               </h3>
             )}
@@ -95,12 +96,12 @@ const Navbar = () => {
                   </motion.p>
                 </>
               ) : (
-                <motion.p variants={textVariants} custom={5} onClick={signIn}>
+                <motion.p variants={textVariants} custom={5} onClick={() => signIn}>
                   Sign in
                 </motion.p>
               )}
             </div>
-            <div className={styles.close} custom={6} onClick={() => setShowMenu(false)}>
+            <div className={styles.close} onClick={() => setShowMenu(false)}>
               <Image src="/icons/close.svg" width={30} height={30} alt="close" />
             </div>
           </motion.div>
