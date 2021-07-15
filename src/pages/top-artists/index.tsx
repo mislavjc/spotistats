@@ -282,7 +282,7 @@ export default function TopArtists({ artists, timeSpans, token, id, username }: 
                   >
                     <div className={styles.table__index}>{index + 1}</div>
                     <div>
-                      <Image src={artist.images[1].url} alt={artist.name} width={50} height={50} />
+                      <img src={artist.images[1].url} alt={artist.name} width={50} height={50} />
                     </div>
                     <div className={styles.title}>{artist.name}</div>
                     <div className={styles.table__genres}>

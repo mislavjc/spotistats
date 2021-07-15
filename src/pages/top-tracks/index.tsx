@@ -84,12 +84,16 @@ export const getServerSideProps: GetServerSideProps = async context => {
       pathBottom:
         'M0,64L48,101.3C96,139,192,213,288,208C384,203,480,117,576,80C672,43,768,53,864,48C960,43,1056,21,1152,32C1248,43,1344,85,1392,106.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z',
     },
-    { span: 'artists', title: 'Artists',   color: long_color,
+    {
+      span: 'artists',
+      title: 'Artists',
+      color: long_color,
       cover: long_artist.images[1].url,
       pathTop:
         'M0,64L48,90.7C96,117,192,171,288,170.7C384,171,480,117,576,106.7C672,96,768,128,864,165.3C960,203,1056,245,1152,240C1248,235,1344,181,1392,154.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z',
       pathBottom:
-        'M0,64L48,101.3C96,139,192,213,288,208C384,203,480,117,576,80C672,43,768,53,864,48C960,43,1056,21,1152,32C1248,43,1344,85,1392,106.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z', },
+        'M0,64L48,101.3C96,139,192,213,288,208C384,203,480,117,576,80C672,43,768,53,864,48C960,43,1056,21,1152,32C1248,43,1344,85,1392,106.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z',
+    },
   ];
   return {
     props: {
@@ -102,7 +106,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   };
 };
 
-export default function TopTracks({ tracks, token, id, timeSpans, username } : TrackProps) {
+export default function TopTracks({ tracks, token, id, timeSpans, username }: TrackProps) {
   const router = useRouter();
   const [data, setData] = useState<Tracks>(tracks);
   const [open, setOpen] = useState(false);
@@ -277,8 +281,8 @@ export default function TopTracks({ tracks, token, id, timeSpans, username } : T
                   >
                     <div className={styles.table__index}>{index + 1}</div>
                     <div>
-                      <Image
-                        src={track.album.images[1].url}
+                      <img
+                        src={track.album.images[2].url}
                         alt={track.name}
                         width={50}
                         height={50}

@@ -48,7 +48,7 @@ const Navbar = () => {
                 <h3>Profile</h3>
               </div>
             ) : (
-              <h3 className={styles.login} onClick={() => signIn()}>
+              <h3 className={styles.login} onClick={() => signIn('spotify')}>
                 Sign in
               </h3>
             )}
