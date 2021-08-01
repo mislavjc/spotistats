@@ -6,11 +6,14 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta charSet="utf-8" />
-          <meta name="description" content="Find your Spotify listening habbits and statistics." />
+          <meta name="description" content="Find your Spotify listening habits and statistics." />
           <meta
             name="og:description"
             content="Find your Spotify listening habbits and statistics."
           />
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content="Spotistats" />
+          <meta property="og:url" content="https://spotistats.vercel.app/" />
           <meta name="theme-color" content="#282828" />
           <link rel="manifest" href="/manifest.json" />
           <link rel="apple-touch-icon" href="/icon.png"></link>

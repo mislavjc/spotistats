@@ -6,8 +6,6 @@
     "paths": {
       "@/*": ["*"],
       "@/api/*": ["pages/api/*"],
-      "@/css/*": ["stylesheets/*"],
-      "@/lib/*": ["lib/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,
