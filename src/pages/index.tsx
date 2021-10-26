@@ -16,7 +16,7 @@ export default function Home() {
       </div>
       <div className={styles.about}>
         <div>
-          <h2>Statify features</h2>
+          <h2>Spotistats features</h2>
           <div className={styles.features}>
             <div>
               <div className={styles.icon}>
