@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import { getSession } from 'next-auth/react';
-import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { millisToMinutesAndSeconds, getColor, getTotalLenght, featuredArtists } from '@/lib/utils';
 import { getSpotifyData, getArtistData } from '@/lib/http';
@@ -229,92 +229,83 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }: Tr
         </div>
       </div>
       <div className="container">
-        <AnimateSharedLayout>
-          <div className="chip-container">
-            {timeSpans.map((time, index: number) => (
-              <button
-                key={time.span}
-                className="chip-outlined"
-                onClick={() => {
-                  setSelected(time);
-                  handleClick(time.span, index);
-                }}
-              >
-                {time.title}
-                {selected === time && (
-                  <motion.div
-                    layoutId="outline"
-                    className="border-green background-green"
-                    initial={false}
-                    transition={spring}
-                  />
-                )}
-              </button>
-            ))}
-          </div>
-        </AnimateSharedLayout>
+        <div className="chip-container">
+          {timeSpans.map((time, index: number) => (
+            <button
+              key={time.span}
+              className="chip-outlined"
+              onClick={() => {
+                setSelected(time);
+                handleClick(time.span, index);
+              }}
+            >
+              {time.title}
+              {selected === time && (
+                <motion.div
+                  layoutId="outline"
+                  className="border-green background-green"
+                  initial={false}
+                  transition={spring}
+                />
+              )}
+            </button>
+          ))}
+        </div>
         <div className="fab-btn">
           <button className="btn" onClick={() => setShowForm(true)}>
             Create playlist
           </button>
         </div>
-        <AnimateSharedLayout>
-          <AnimatePresence>
-            <div className={styles.table}>
-              <div className={styles.table__header}>
-                <div className={styles.header__index}>#</div>
-                <div>&nbsp;</div>
-                <div>Title</div>
-                <div className={styles.header__album}>Album</div>
-                <div>
-                  <Image src="/icons/time.svg" alt="time icon" width={14} height={14} />
-                </div>
+        <AnimatePresence>
+          <div className={styles.table}>
+            <div className={styles.table__header}>
+              <div className={styles.header__index}>#</div>
+              <div>&nbsp;</div>
+              <div>Title</div>
+              <div className={styles.header__album}>Album</div>
+              <div>
+                <Image src="/icons/time.svg" alt="time icon" width={14} height={14} />
               </div>
-              {data[range].map((track: Item, index: number) => (
-                <div key={track.name}>
-                  <motion.div
-                    variants={cardVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    custom={index}
-                    layoutId={track.name}
-                    className={styles.table__row}
-                  >
-                    <div className={styles.table__index}>{index + 1}</div>
-                    <div>
-                      <img
-                        src={track.album.images[2].url}
-                        alt={track.name}
-                        width={50}
-                        height={50}
-                      />
-                    </div>
-                    <div className={styles.table__credits}>
-                      <span className={styles.title}>{track.name}</span>
-                      <span className={styles.artists}>
-                        {track.explicit && <span className={styles.explicit}>E</span>}
-                        <span>
-                          {track.artists.map((artist: Artist, index: number) => (
-                            <span key={artist.name}>
-                              {track.artists.length > 1
-                                ? track.artists.length !== index + 1
-                                  ? artist.name + ', '
-                                  : artist.name
-                                : artist.name}
-                            </span>
-                          ))}
-                        </span>
-                      </span>
-                    </div>
-                    <div className={styles.table__album}>{track.album.name}</div>
-                    <div>{millisToMinutesAndSeconds(track.duration_ms)}</div>
-                  </motion.div>
-                </div>
-              ))}
             </div>
-          </AnimatePresence>
-        </AnimateSharedLayout>
+            {data[range].map((track: Item, index: number) => (
+              <div key={track.name}>
+                <motion.div
+                  variants={cardVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  custom={index}
+                  layoutId={track.name}
+                  className={styles.table__row}
+                >
+                  <div className={styles.table__index}>{index + 1}</div>
+                  <div>
+                    <img src={track.album.images[2].url} alt={track.name} width={50} height={50} />
+                  </div>
+                  <div className={styles.table__credits}>
+                    <span className={styles.title}>{track.name}</span>
+                    <span className={styles.artists}>
+                      {track.explicit && <span className={styles.explicit}>E</span>}
+                      <span>
+                        {track.artists.map((artist: Artist, index: number) => (
+                          <span key={artist.name}>
+                            {track.artists.length > 1
+                              ? track.artists.length !== index + 1
+                                ? artist.name + ', '
+                                : artist.name
+                              : artist.name}
+                          </span>
+                        ))}
+                      </span>
+                    </span>
+                  </div>
+                  <div className={styles.table__album}>{track.album.name}</div>
+                  <div>{millisToMinutesAndSeconds(track.duration_ms)}</div>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </AnimatePresence>
         <AnimatePresence>
           {showForm && (
             <motion.div

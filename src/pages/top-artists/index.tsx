@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
-import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -233,83 +233,79 @@ export default function TopArtists({ artists, timeSpans, token, id, username }: 
         </div>
       </div>
       <div className="container">
-        <AnimateSharedLayout>
-          <div className="chip-container">
-            {timeSpans.map((time, index) => (
-              <button
-                key={time.span}
-                className="chip-outlined"
-                onClick={() => {
-                  setSelected(time);
-                  handleClick(time.span, index);
-                }}
-              >
-                {time.title}
-                {selected === time && (
-                  <motion.div
-                    layoutId="outline"
-                    className="border-green background-green"
-                    initial={false}
-                    transition={spring}
-                  />
-                )}
-              </button>
-            ))}
-          </div>
-        </AnimateSharedLayout>
+        <div className="chip-container">
+          {timeSpans.map((time, index) => (
+            <button
+              key={time.span}
+              className="chip-outlined"
+              onClick={() => {
+                setSelected(time);
+                handleClick(time.span, index);
+              }}
+            >
+              {time.title}
+              {selected === time && (
+                <motion.div
+                  layoutId="outline"
+                  className="border-green background-green"
+                  initial={false}
+                  transition={spring}
+                />
+              )}
+            </button>
+          ))}
+        </div>
         <div className="fab-btn">
           <button className="btn" onClick={() => setShowForm(true)}>
             Create playlist
           </button>
         </div>
-        <AnimateSharedLayout>
-          <AnimatePresence>
-            <div className={styles.table}>
-              <div className={styles.table__header}>
-                <div className={styles.header__index}>#</div>
-                <div>&nbsp;</div>
-                <div>Name</div>
-                <div className={styles.header__genres}>Genres</div>
-                <div className={styles.header__album}>Followers</div>
-              </div>
-              {data[range].map((artist, index) => (
-                <div key={artist.name}>
-                  <motion.div
-                    variants={cardVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    custom={index}
-                    layoutId={artist.name}
-                    className={styles.table__row}
-                  >
-                    <div className={styles.table__index}>{index + 1}</div>
-                    <div>
-                      <img src={artist.images[1].url} alt={artist.name} width={50} height={50} />
-                    </div>
-                    <div className={styles.title}>{artist.name}</div>
-                    <div className={styles.table__genres}>
-                      <span>
-                        {artist.genres.slice(0, 3).map((genre, index) => (
-                          <span key={genre}>
-                            {artist.genres.length > 1
-                              ? (artist.genres.length > 3 ? 3 : artist.genres.length) !== index + 1
-                                ? genre + ', '
-                                : genre
-                              : genre}
-                          </span>
-                        ))}
-                      </span>
-                    </div>
-                    <div className={styles.table__album}>
-                      {numFormatter(artist.followers.total, 1)}
-                    </div>
-                  </motion.div>
-                </div>
-              ))}
+        <AnimatePresence>
+          <div className={styles.table}>
+            <div className={styles.table__header}>
+              <div className={styles.header__index}>#</div>
+              <div>&nbsp;</div>
+              <div>Name</div>
+              <div className={styles.header__genres}>Genres</div>
+              <div className={styles.header__album}>Followers</div>
             </div>
-          </AnimatePresence>
-        </AnimateSharedLayout>
+            {data[range].map((artist, index) => (
+              <div key={artist.name}>
+                <motion.div
+                  variants={cardVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  custom={index}
+                  layoutId={artist.name}
+                  className={styles.table__row}
+                >
+                  <div className={styles.table__index}>{index + 1}</div>
+                  <div>
+                    <img src={artist.images[1].url} alt={artist.name} width={50} height={50} />
+                  </div>
+                  <div className={styles.title}>{artist.name}</div>
+                  <div className={styles.table__genres}>
+                    <span>
+                      {artist.genres.slice(0, 3).map((genre, index) => (
+                        <span key={genre}>
+                          {artist.genres.length > 1
+                            ? (artist.genres.length > 3 ? 3 : artist.genres.length) !== index + 1
+                              ? genre + ', '
+                              : genre
+                            : genre}
+                        </span>
+                      ))}
+                    </span>
+                  </div>
+                  <div className={styles.table__album}>
+                    {numFormatter(artist.followers.total, 1)}
+                  </div>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </AnimatePresence>
         <AnimatePresence>
           {showForm && (
             <motion.div
