@@ -181,6 +181,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }: Tr
             top: pathTop,
             bottom: pathBottom,
           }}
+          text="Top songs"
         />
         <div className={styles.header__text}>
           <h5>Playlist</h5>

@@ -12,6 +12,7 @@ import Button from '@/components/Button/Button';
 import TextField from '@/components/TextField/TextField';
 import Modal from '@/components/Modal/Modal';
 import Chip from '@/components/Chip/Chip';
+import Cover from '@/components/Cover/Cover';
 
 import { cardVariants } from '@/lib/framer';
 import { getColor, numFormatter } from '@/lib/utils';
@@ -147,66 +148,15 @@ export default function TopArtists({ artists, timeSpans, token, id, username }: 
       />
       <Backdrop show={showForm || open} onClick={setShowForm} />
       <div className={styles.header}>
-        <div className={styles.header__image}>
-          <span>
-            <div className={styles.wave__top}>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <motion.path
-                  initial={false}
-                  animate={{ fill: color }}
-                  fillOpacity="0.9"
-                  d={pathTop}
-                ></motion.path>
-              </svg>
-            </div>
-            <div className={styles.header__container}>
-              <div>
-                <Image
-                  src={data[range][0].images[0].url}
-                  alt="cover image"
-                  height={125}
-                  width={125}
-                />
-                <Image
-                  src={data[range][1].images[0].url}
-                  alt="cover image"
-                  height={125}
-                  width={125}
-                />
-              </div>
-              <div>
-                <Image
-                  src={data[range][2].images[0].url}
-                  alt="cover image"
-                  height={125}
-                  width={125}
-                />
-                <Image
-                  src={data[range][3].images[0].url}
-                  alt="cover image"
-                  height={125}
-                  width={125}
-                />
-              </div>
-            </div>
-            <div className={styles.wave__bottom}>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <motion.path
-                  initial={false}
-                  animate={{ fill: color }}
-                  fillOpacity="0.9"
-                  d={pathBottom}
-                ></motion.path>
-              </svg>
-            </div>
-            <motion.div
-              className={styles.wave__cover}
-              initial={false}
-              animate={{ background: color }}
-            />
-            <h1 className={styles.wave__title}>Top artists</h1>
-          </span>
-        </div>
+        <Cover
+          cover={data[range][0].images[0].url}
+          color={color}
+          path={{
+            top: pathTop,
+            bottom: pathBottom,
+          }}
+          text="Top artists"
+        />
         <div className={styles.header__text}>
           <h5>Playlist</h5>
           <h1 className={styles.pageTitle}>Top artists</h1>

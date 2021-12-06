@@ -11,9 +11,10 @@ interface Props {
     top: string;
     bottom: string;
   };
+  text: string;
 }
 
-const Cover: FC<Props> = ({ cover, color, path }) => (
+const Cover: FC<Props> = ({ cover, color, path, text }) => (
   <div className={styles.header__image}>
     <span>
       <div className={styles.wave__top}>
@@ -40,7 +41,7 @@ const Cover: FC<Props> = ({ cover, color, path }) => (
         </svg>
       </div>
       <motion.div className={styles.wave__cover} initial={false} animate={{ background: color }} />
-      <h1 className={styles.wave__title}>Top songs</h1>
+      <h1 className={styles.wave__title}>{text}</h1>
     </span>
   </div>
 );
