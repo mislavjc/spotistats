@@ -156,7 +156,6 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }: Tr
           setUrl(res.data);
         });
     } else {
-      console.log('no name');
       setError(true);
     }
   };
