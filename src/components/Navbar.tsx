@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { signIn, useSession, signOut } from 'next-auth/client';
+import { signIn, useSession, signOut } from 'next-auth/react';
 import Image from 'next/image';
 import styles from '@/styles/Navbar.module.scss';
 import { useState } from 'react';
@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { menuVariants, textVariants } from '@/lib/framer';
 
 const Navbar = () => {
-  const [session, loading] = useSession();
+  const { data: session, status } = useSession();
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -35,7 +35,7 @@ const Navbar = () => {
             </Link>
           </div>
           <div>
-            {session && !loading ? (
+            {session && status === 'authenticated' ? (
               <div className={styles.account}>
                 <Image
                   className={styles.avatar}
@@ -84,7 +84,7 @@ const Navbar = () => {
               <motion.span variants={textVariants} custom={3} className={styles.seperator}>
                 &nbsp;
               </motion.span>
-              {session && !loading ? (
+              {session && status === 'authenticated' ? (
                 <>
                   <motion.p variants={textVariants} custom={4} onClick={() => setShowMenu(false)}>
                     <Link href="/">

@@ -1,36 +1,39 @@
 import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers';
+import SpotifyProvider from 'next-auth/providers/spotify';
 
 export default NextAuth({
   providers: [
-    Providers.Spotify({
-      clientId: process.env.SPOTIFY_CLIENT_ID,
-      clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-      scope: 'user-top-read user-library-read playlist-modify-private user-read-private',
+    SpotifyProvider({
+      clientId: process.env.SPOTIFY_CLIENT_ID!,
+      clientSecret: process.env.SPOTIFY_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          scope: 'user-top-read user-library-read playlist-modify-private user-read-private',
+        },
+      },
     }),
   ],
   pages: {
     signIn: '/auth/signin',
   },
   callbacks: {
-    async jwt(token, _, account) {
-      if (account) {
-        token.id = account.id;
-        token.accessToken = account.accessToken;
+    async jwt({ token, account, profile }) {
+      if (profile && account) {
+        console.log('account', account);
+        token.id = profile.id;
+        token.accessToken = account.access_token;
       }
+
       return token;
     },
-    async session(session, user) {
-      session.user = user;
-      return session;
-    },
+    // @ts-ignore
+    session: async ({ token, session }) =>
+      Promise.resolve({
+        user: token,
+        expires: new Date(Date.now() + 1000 * 60 * 30),
+      }),
   },
-  jwt: {
-    signingKey: process.env.JWT_SIGNING_PRIVATE_KEY,
-    verificationOptions: {
-      maxTokenAge: '3000s',
-    },
-  },
+  secret: process.env.SECRET,
   session: {
     maxAge: 3000,
   },

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import '@/styles/Styles.global.scss';
-import { Provider } from 'next-auth/client';
+import { SessionProvider } from 'next-auth/react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Router from 'next/router';
@@ -20,11 +20,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Spotistats</title>
       </Head>
-      <Provider session={pageProps.session}>
+      <SessionProvider session={pageProps.session} refetchInterval={20 * 60}>
         <Navbar />
         <Component {...pageProps} />
         <Footer />
-      </Provider>
+      </SessionProvider>
     </>
   );
 }

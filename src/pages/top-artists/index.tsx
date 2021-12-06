@@ -1,4 +1,4 @@
-import { getSession } from 'next-auth/client';
+import { getSession } from 'next-auth/react';
 import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
 import { getSpotifyData } from '@/lib/http';
 import { getColor, numFormatter } from '@/lib/utils';

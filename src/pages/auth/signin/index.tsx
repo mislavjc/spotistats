@@ -1,4 +1,4 @@
-import { ClientSafeProvider, getProviders, signIn } from 'next-auth/client';
+import { ClientSafeProvider, getProviders, signIn } from 'next-auth/react';
 import Link from 'next/link';
 import styles from '@/styles/Login.module.scss';
 import { useEffect } from 'react';

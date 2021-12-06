@@ -1,11 +1,19 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["*"],
-      "@/api/*": ["pages/api/*"],
+      "@/*": [
+        "*"
+      ],
+      "@/api/*": [
+        "pages/api/*"
+      ]
     },
     "allowJs": true,
     "skipLibCheck": true,
@@ -17,8 +25,17 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/auth/signin/index.tsx", "src/pages/_document.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/pages/auth/signin/index.tsx",
+    "src/pages/_document.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
