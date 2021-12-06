@@ -8,6 +8,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 import Backdrop from '@/components/Backdrop/Backdrop';
+import Button from '@/components/Button/Button';
 
 import { cardVariants, modalVariants, spring } from '@/lib/framer';
 import { getColor, numFormatter } from '@/lib/utils';
@@ -244,9 +245,7 @@ export default function TopArtists({ artists, timeSpans, token, id, username }: 
           ))}
         </div>
         <div className="fab-btn">
-          <button className="btn" onClick={() => setShowForm(true)}>
-            Create playlist
-          </button>
+          <Button onClick={() => setShowForm(true)}>Create playlist</Button>
         </div>
         <AnimatePresence>
           <div className={styles.table}>
@@ -279,7 +278,7 @@ export default function TopArtists({ artists, timeSpans, token, id, username }: 
                         <span key={genre}>
                           {artist.genres.length > 1
                             ? (artist.genres.length > 3 ? 3 : artist.genres.length) !== index + 1
-                              ? genre + ', '
+                              ? `${genre}, `
                               : genre
                             : genre}
                         </span>
@@ -319,9 +318,13 @@ export default function TopArtists({ artists, timeSpans, token, id, username }: 
                 onChange={e => setDescription(e.target.value)}
               />
               <div className="button__container">
-                <button onClick={() => createPlaylist(name, description)} className="btn-sm">
+                <Button
+                  color="secondary"
+                  size="sm"
+                  onClick={() => createPlaylist(name, description)}
+                >
                   Create
-                </button>
+                </Button>
               </div>
             </motion.div>
           )}
@@ -339,9 +342,9 @@ export default function TopArtists({ artists, timeSpans, token, id, username }: 
               <h2>Playlist created successfully!</h2>
               <p>{playlistTitle} was added to your library.</p>
               <div className="button__container">
-                <button onClick={() => window.open(url, '_blank')} className="btn-sm-green">
+                <Button size="sm" onClick={() => window.open(url, '_blank')}>
                   Open playlist
-                </button>
+                </Button>
               </div>
             </motion.div>
           )}

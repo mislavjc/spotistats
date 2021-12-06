@@ -1,0 +1,55 @@
+@import '@/styles/variables';
+
+@mixin button_mixin($background, $background-hover, $border, $border-hover, $size, $color) {
+  font-family: 'PlusJakartaSans', sans-serif;
+  background: $background;
+  color: $text-primary;
+  font-size: $size;
+  color: $color;
+  padding: $size $size * 2;
+  border-radius: 5rem;
+  text-transform: uppercase;
+  border: 0.3rem solid $border;
+  font-weight: $bold;
+  transition: 250ms;
+  letter-spacing: 0.1rem;
+  &:hover {
+    background: $background-hover;
+    border: 0.3rem solid $border-hover;
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+}
+
+.btn {
+  &__md {
+    &_primary {
+      @include button_mixin($green, $light-green, $green, $light-green, 1rem, $text-primary);
+    }
+    &_secondary {
+      @include button_mixin(
+        $text-primary,
+        $text-primary,
+        $text-primary,
+        $text-primary,
+        1rem,
+        $bg-secondary
+      );
+    }
+  }
+  &__sm {
+    &_primary {
+      @include button_mixin($green, $light-green, $green, $light-green, 0.8rem, $text-primary);
+    }
+    &_secondary {
+      @include button_mixin(
+        $text-primary,
+        $text-primary,
+        $text-primary,
+        $text-primary,
+        0.8rem,
+        $bg-secondary
+      );
+    }
+  }
+}

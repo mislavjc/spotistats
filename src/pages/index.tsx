@@ -1,18 +1,20 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import styles from '@/styles/Landing.module.scss';
+import Button from '@/components/Button/Button';
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <>
       <div className={styles.landingPage}>
         <div>
           <h1>Get your statistics</h1>
           <p>See what tracks were your most listened.</p>
-          <Link href="/top-tracks" passHref>
-            <button className="btn">OPEN STATISTICS</button>
-          </Link>
+          <Button onClick={() => router.push('/top-tracks')}>OPEN STATISTICS</Button>
         </div>
       </div>
       <div className={styles.about}>

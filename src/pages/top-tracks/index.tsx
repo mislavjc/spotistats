@@ -8,6 +8,7 @@ import { getSession } from 'next-auth/react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import Backdrop from '@/components/Backdrop/Backdrop';
+import Button from '@/components/Button/Button';
 
 import { millisToMinutesAndSeconds, getColor, getTotalLenght, featuredArtists } from '@/lib/utils';
 import { getSpotifyData, getArtistData } from '@/lib/http';
@@ -239,9 +240,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }: Tr
           ))}
         </div>
         <div className="fab-btn">
-          <button className="btn" onClick={() => setShowForm(true)}>
-            Create playlist
-          </button>
+          <Button onClick={() => setShowForm(true)}>Create playlist</Button>
         </div>
         <AnimatePresence>
           <div className={styles.table}>
@@ -318,9 +317,13 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }: Tr
                 onChange={e => setDescription(e.target.value)}
               />
               <div className="button__container">
-                <button onClick={() => createPlaylist(name, description)} className="btn-sm">
+                <Button
+                  color="secondary"
+                  size="sm"
+                  onClick={() => createPlaylist(name, description)}
+                >
                   Create
-                </button>
+                </Button>
               </div>
             </motion.div>
           )}
@@ -338,9 +341,9 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }: Tr
               <h2>Playlist created successfully!</h2>
               <p>{playlistTitle} was added to your library.</p>
               <div className="button__container">
-                <button onClick={() => window.open(url, '_blank')} className="btn-sm-green">
+                <Button size="sm" onClick={() => window.open(url, '_blank')}>
                   Open playlist
-                </button>
+                </Button>
               </div>
             </motion.div>
           )}
