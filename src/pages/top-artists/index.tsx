@@ -7,6 +7,8 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import axios from 'axios';
 
+import Backdrop from '@/components/Backdrop/Backdrop';
+
 import { cardVariants, modalVariants, spring } from '@/lib/framer';
 import { getColor, numFormatter } from '@/lib/utils';
 import { getSpotifyData } from '@/lib/http';
@@ -134,26 +136,12 @@ export default function TopArtists({ artists, timeSpans, token, id, username }: 
       <Head>
         <title>Top artists | Spotistats</title>
       </Head>
-      <AnimatePresence>
-        {(showForm || open) && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            key="overlay"
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="backdrop"
-            onClick={() => {
-              setShowForm(false);
-              setOpen(false);
-            }}
-          />
-        )}
-        <motion.div
-          className="overlay"
-          initial={false}
-          animate={{ background: `linear-gradient(180deg, ${color} 10%, #121212 100%)` }}
-        />
-      </AnimatePresence>
+      <motion.div
+        className="overlay"
+        initial={false}
+        animate={{ background: `linear-gradient(180deg, ${color} 10%, #121212 100%)` }}
+      />
+      <Backdrop show={showForm || open} onClick={setShowForm} />
       <div className={styles.header}>
         <div className={styles.header__image}>
           <span>

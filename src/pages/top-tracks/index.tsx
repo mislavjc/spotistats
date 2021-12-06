@@ -7,6 +7,8 @@ import Image from 'next/image';
 import { getSession } from 'next-auth/react';
 import { AnimatePresence, motion } from 'framer-motion';
 
+import Backdrop from '@/components/Backdrop/Backdrop';
+
 import { millisToMinutesAndSeconds, getColor, getTotalLenght, featuredArtists } from '@/lib/utils';
 import { getSpotifyData, getArtistData } from '@/lib/http';
 import { cardVariants, modalVariants, spring } from '@/lib/framer';
@@ -157,31 +159,16 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }: Tr
   };
 
   return (
-    <>
+    <div style={{ position: 'relative' }}>
       <Head>
         <title>Top tracks | Spotistats</title>
       </Head>
-      <AnimatePresence>
-        {(showForm || open) && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            key="overlay"
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="backdrop"
-            onClick={() => {
-              setShowForm(false);
-              setOpen(false);
-              setError(false);
-            }}
-          />
-        )}
-        <motion.div
-          className="overlay"
-          initial={false}
-          animate={{ background: `linear-gradient(180deg, ${color} 10%, #121212 100%)` }}
-        />
-      </AnimatePresence>
+      <motion.div
+        className="overlay"
+        initial={false}
+        animate={{ background: `linear-gradient(180deg, ${color} 10%, #121212 100%)` }}
+      />
+      <Backdrop show={showForm || open} onClick={setShowForm} />
       <div className={styles.header}>
         <div className={styles.header__image}>
           <span>
@@ -291,7 +278,7 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }: Tr
                           <span key={artist.name}>
                             {track.artists.length > 1
                               ? track.artists.length !== index + 1
-                                ? artist.name + ', '
+                                ? `${artist.name}, `
                                 : artist.name
                               : artist.name}
                           </span>
@@ -359,6 +346,6 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }: Tr
           )}
         </AnimatePresence>
       </div>
-    </>
+    </div>
   );
 }
