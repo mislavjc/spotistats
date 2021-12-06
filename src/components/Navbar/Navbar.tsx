@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 import { menuVariants, textVariants } from '@/lib/framer';
 
-import styles from '@/styles/Navbar.module.scss';
+import styles from './Navbar.module.scss';
 
 
 const Navbar = () => {
