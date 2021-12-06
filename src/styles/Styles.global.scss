@@ -1,4 +1,3 @@
-@use "sass:math";
 @import '../styles/variables';
 
 @font-face {
@@ -85,53 +84,11 @@ h2 {
   font-weight: $black;
 }
 
-@mixin center-width($width) {
-  width: $width;
-  left: calc(50% - #{$width / 2});
-}
-
-.modal {
-  position: fixed;
-  top: 33vh;
-  @include center-width(500px);
-  z-index: 10;
-}
-
 .overlay {
   position: absolute;
   width: 100%;
   height: 55vh;
   z-index: -1;
-}
-
-@media (min-width: 520px) and (max-width: 760px) {
-  .modal {
-    @include center-width(520px);
-  }
-}
-
-@media (min-width: 375px) and (max-width: 520px) {
-  .modal {
-    @include center-width(360px);
-  }
-}
-
-@media (min-width: 280px) and (max-width: 320px) {
-  .modal {
-    @include center-width(270px);
-  }
-}
-
-@media (min-width: 320px) and (max-width: 374px) {
-  .modal {
-    @include center-width(310px);
-  }
-}
-
-@media (max-width: 275px) {
-  .modal {
-    @include center-width(180px);
-  }
 }
 
 @mixin chip_mixin($background) {
@@ -143,45 +100,6 @@ h2 {
   border-radius: 10rem;
   white-space: nowrap;
   border: 1px solid $text-secondary;
-}
-
-.playlist-modal {
-  padding: 1rem;
-  background: $bg-secondary;
-  display: flex;
-  flex-direction: column;
-  border-radius: 0.5rem;
-  input {
-    background: $gray-secondary;
-    border: 1px solid $gray-secondary;
-    border-radius: 3px;
-    font-size: inherit;
-    padding: 1rem;
-    color: inherit;
-    margin-bottom: 1rem;
-    &:hover {
-      border: 1px solid $text-secondary;
-      transition: 0.25s;
-    }
-  }
-  .inputError {
-    border: 1px solid red;
-    background: rgba(255, 0, 0, 0.1);
-  }
-  h2 {
-    margin: 1rem 0;
-  }
-}
-
-.modal-light {
-  background: $text-primary;
-  color: $bg-secondary;
-  h2 {
-    margin-bottom: 0;
-  }
-  p {
-    margin-bottom: 2rem;
-  }
 }
 
 .border-green {

@@ -1,0 +1,27 @@
+@import '@/styles/variables';
+
+.modal {
+  position: fixed;
+  position: absolute;
+  left: 50%;
+  top: 50vh;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.dark {
+  background: $bg-secondary;
+}
+
+.light {
+  background: $text-primary;
+  color: $bg-secondary;
+}
+
+.padded {
+  padding: 1rem;
+}
+
+.rounded {
+  border-radius: 0.5rem;
+}

@@ -9,10 +9,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import Backdrop from '@/components/Backdrop/Backdrop';
 import Button from '@/components/Button/Button';
+import TextField from '@/components/TextField/TextField';
+import Modal from '@/components/Modal/Modal';
 
 import { millisToMinutesAndSeconds, getColor, getTotalLenght, featuredArtists } from '@/lib/utils';
 import { getSpotifyData, getArtistData } from '@/lib/http';
-import { cardVariants, modalVariants, spring } from '@/lib/framer';
+import { cardVariants, spring } from '@/lib/framer';
 import { Tracks, Artist, Item, TrackProps } from '@/types/track-types';
 import { TimeSpan } from '@/types/shared-types';
 
@@ -292,62 +294,36 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }: Tr
             ))}
           </div>
         </AnimatePresence>
-        <AnimatePresence>
-          {showForm && (
-            <motion.div
-              variants={modalVariants}
-              className="modal playlist-modal"
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              key="playlist-modal"
-            >
-              <h2>Create a playlist</h2>
-              <input
-                id="playlist-title"
-                placeholder="Add a name*"
-                className={error ? 'inputError' : undefined}
-                value={name}
-                onChange={e => setName(e.target.value)}
-              />
-              <input
-                id="playlist-description"
-                placeholder="Add an optional description"
-                value={description}
-                onChange={e => setDescription(e.target.value)}
-              />
-              <div className="button__container">
-                <Button
-                  color="secondary"
-                  size="sm"
-                  onClick={() => createPlaylist(name, description)}
-                >
-                  Create
-                </Button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              variants={modalVariants}
-              className="modal modal-light playlist-modal"
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              key="playlist-created-modal"
-            >
-              <h2>Playlist created successfully!</h2>
-              <p>{playlistTitle} was added to your library.</p>
-              <div className="button__container">
-                <Button size="sm" onClick={() => window.open(url, '_blank')}>
-                  Open playlist
-                </Button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <Modal show={showForm} padded rounded>
+          <h2>Create a playlist</h2>
+          <TextField
+            placeholder="Add a name*"
+            error={error}
+            value={name}
+            onChange={setName}
+            fullWidth
+          />
+          <TextField
+            placeholder="Add an optional description"
+            value={description}
+            onChange={setDescription}
+            fullWidth
+          />
+          <div className="button__container">
+            <Button color="secondary" size="sm" onClick={() => createPlaylist(name, description)}>
+              Create
+            </Button>
+          </div>
+        </Modal>
+        <Modal show={open} padded rounded background="light">
+          <h2>Playlist created successfully!</h2>
+          <p>{playlistTitle} was added to your library.</p>
+          <div className="button__container">
+            <Button size="sm" onClick={() => window.open(url, '_blank')}>
+              Open playlist
+            </Button>
+          </div>
+        </Modal>
       </div>
     </div>
   );

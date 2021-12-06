@@ -1,0 +1,27 @@
+@import '@/styles/variables';
+
+.input {
+  &__field {
+    background: $gray-secondary;
+    border: 1px solid $gray-secondary;
+    border-radius: 3px;
+    font-size: inherit;
+    padding: 1rem;
+    color: inherit;
+    margin-bottom: 1rem;
+    &:hover {
+      border: 1px solid $text-secondary;
+      transition: 0.25s;
+    }
+    &_error {
+      border: 1px solid red;
+      background: rgba(255, 0, 0, 0.1);
+    }
+    &_fullWidth {
+      width: 100%;
+    }
+    &_gutterBottom {
+      margin-bottom: 1.5rem;
+    }
+  }
+}

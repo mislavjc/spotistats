@@ -19,7 +19,6 @@ export default NextAuth({
   callbacks: {
     async jwt({ token, account, profile }) {
       if (profile && account) {
-        console.log('account', account);
         token.id = profile.id;
         token.accessToken = account.access_token;
       }
