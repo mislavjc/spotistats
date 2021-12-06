@@ -1,13 +1,15 @@
 import Head from 'next/head';
-import '@/styles/Styles.global.scss';
-import { SessionProvider } from 'next-auth/react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Router from 'next/router';
+import { SessionProvider } from 'next-auth/react';
 // @ts-ignore
 import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
+
 import type { AppProps  } from 'next/app';
+
+import 'nprogress/nprogress.css';
+import '@/styles/Styles.global.scss';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());

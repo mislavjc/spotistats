@@ -1,17 +1,19 @@
-import { getSession } from 'next-auth/react';
+import axios from 'axios';
+import { GetServerSideProps } from 'next';
 import { useState } from 'react';
-import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
+import Image from 'next/image';
+import { getSession } from 'next-auth/react';
+import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
+
+import { millisToMinutesAndSeconds, getColor, getTotalLenght, featuredArtists } from '@/lib/utils';
 import { getSpotifyData, getArtistData } from '@/lib/http';
 import { cardVariants, modalVariants, spring } from '@/lib/framer';
-import axios from 'axios';
-import Image from 'next/image';
-import { millisToMinutesAndSeconds, getColor, getTotalLenght, featuredArtists } from '@/lib/utils';
-import styles from '@/styles/Tracks.module.scss';
-import Head from 'next/head';
-import { GetServerSideProps } from 'next';
 import { Tracks, Artist, Item, TrackProps } from '@/types/track-types';
 import { TimeSpan } from '@/types/shared-types';
+
+import styles from '@/styles/Tracks.module.scss';
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const session: any = await getSession(context);

@@ -1,10 +1,13 @@
 import Link from 'next/link';
-import { signIn, useSession, signOut } from 'next-auth/react';
 import Image from 'next/image';
-import styles from '@/styles/Navbar.module.scss';
+import { signIn, useSession, signOut } from 'next-auth/react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+
 import { menuVariants, textVariants } from '@/lib/framer';
+
+import styles from '@/styles/Navbar.module.scss';
+
 
 const Navbar = () => {
   const { data: session, status } = useSession();
