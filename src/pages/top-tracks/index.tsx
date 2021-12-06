@@ -11,10 +11,11 @@ import Backdrop from '@/components/Backdrop/Backdrop';
 import Button from '@/components/Button/Button';
 import TextField from '@/components/TextField/TextField';
 import Modal from '@/components/Modal/Modal';
+import Chip from '@/components/Chip/Chip';
 
 import { millisToMinutesAndSeconds, getColor, getTotalLenght, featuredArtists } from '@/lib/utils';
 import { getSpotifyData, getArtistData } from '@/lib/http';
-import { cardVariants, spring } from '@/lib/framer';
+import { cardVariants } from '@/lib/framer';
 import { Tracks, Artist, Item, TrackProps } from '@/types/track-types';
 import { TimeSpan } from '@/types/shared-types';
 
@@ -220,24 +221,18 @@ export default function TopTracks({ tracks, token, id, timeSpans, username }: Tr
       <div className="container">
         <div className="chip-container">
           {timeSpans.map((time, index: number) => (
-            <button
+            <Chip
               key={time.span}
-              className="chip-outlined"
               onClick={() => {
                 setSelected(time);
                 handleClick(time.span, index);
               }}
+              selected={selected === time}
+              layoutId="chip-container"
+              spaced
             >
               {time.title}
-              {selected === time && (
-                <motion.div
-                  layoutId="outline"
-                  className="border-green background-green"
-                  initial={false}
-                  transition={spring}
-                />
-              )}
-            </button>
+            </Chip>
           ))}
         </div>
         <div className="fab-btn">

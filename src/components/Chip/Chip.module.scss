@@ -1,0 +1,38 @@
+@import "@/styles/variables";
+
+@mixin chip_mixin($background) {
+  background: $background;
+  color: $text-primary;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 10rem;
+  white-space: nowrap;
+  border: 1px solid $text-secondary;
+}
+
+.chip {
+  @include chip_mixin(transparent);
+  position: relative;
+  margin: 0.5rem 0;
+}
+
+.spaced {
+  margin-right: 0.5rem;
+}
+
+.border__green {
+  border: 1px solid $light-green;
+  position: absolute;
+  z-index: 3;
+  border-radius: 10rem;
+  top: 0px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.background__green {
+  background: $green;
+  z-index: -1;
+}
