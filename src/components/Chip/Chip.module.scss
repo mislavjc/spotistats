@@ -1,4 +1,4 @@
-@import "@/styles/variables";
+@import '@/styles/variables';
 
 @mixin chip_mixin($background) {
   background: $background;
@@ -19,6 +19,10 @@
 
 .spaced {
   margin-right: 0.5rem;
+}
+
+.capitalized {
+  text-transform: capitalize;
 }
 
 .border__green {

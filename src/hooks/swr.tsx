@@ -2,6 +2,8 @@ import useSWR from 'swr';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 
+import { useStore } from '@/lib/store';
+
 // @ts-ignore
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
@@ -30,7 +32,6 @@ export const useUser = () => {
   };
 };
 
-
 export const useTracks = (url: string | null) => {
   const { data, error } = useSWR(url ? `/api/tracks/${url}` : null, fetcher);
 
@@ -43,7 +44,17 @@ export const useTracks = (url: string | null) => {
   };
 };
 
-import { useStore } from '@/lib/store';
+export const useArtists = (url: string | null) => {
+  const { data, error } = useSWR(url ? `/api/artists/${url}` : null, fetcher);
+
+  return {
+    artists: data?.artists,
+    color: data?.color,
+    cover: data?.cover,
+    isLoading: !error && !data,
+    isError: error,
+  };
+};
 
 export const useStoreUser = () => {
   const { user: authUser } = useUser();

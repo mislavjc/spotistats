@@ -11,10 +11,23 @@ interface Props {
   selected: boolean;
   layoutId?: string;
   spaced?: boolean;
+  capitalized?: boolean;
 }
 
-const Chip: FC<Props> = ({ children, onClick, selected, layoutId = 'chip', spaced = false }) => (
-  <button className={`${styles.chip} ${spaced ? styles.spaced : ''}`} onClick={onClick}>
+const Chip: FC<Props> = ({
+  children,
+  onClick,
+  selected,
+  layoutId = 'chip',
+  spaced = false,
+  capitalized = false,
+}) => (
+  <button
+    className={`${styles.chip} ${spaced ? styles.spaced : ''} ${
+      capitalized ? styles.capitalized : ''
+    }`}
+    onClick={onClick}
+  >
     {children}
     {selected && (
       <motion.div
