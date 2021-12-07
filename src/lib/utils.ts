@@ -55,3 +55,13 @@ export const featuredArtists = (arr: Item[]) => {
   }
   return [firstArtist, secondArtist];
 };
+
+export const getRandomArbitrary = (min: number, max: number) => Math.random() * (max - min) + min;
+
+export const getFallbackTracks = () => {
+  const fallback = [];
+  for (let i = 0; i < 30; i++) {
+    fallback.push(i);
+  }
+  return fallback;
+};

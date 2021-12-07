@@ -4,7 +4,7 @@ import { SessionProvider } from 'next-auth/react';
 // @ts-ignore
 import NProgress from 'nprogress';
 
-import type { AppProps  } from 'next/app';
+import type { AppProps } from 'next/app';
 
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';

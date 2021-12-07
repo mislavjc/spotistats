@@ -22,7 +22,9 @@
     "nprogress": "^0.2.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "sass": "^1.44.0"
+    "sass": "^1.44.0",
+    "swr": "^1.1.0",
+    "teaful": "^0.9.2"
   },
   "devDependencies": {
     "@types/node": "^16.11.12",

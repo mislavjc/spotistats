@@ -21,7 +21,6 @@ import { getSpotifyData } from '@/lib/http';
 import { ArtistProps, Artists } from '@/types/artist-types';
 
 import styles from '@/styles/Artists.module.scss';
-import Skeleton from '@/components/Skeleton/Skeleton';
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const session: any = await getSession(context);
@@ -119,6 +118,11 @@ export default function TopArtists({ artists, timeSpans, token, id, username }: 
     }
   };
 
+  const backdropHandler = () => {
+    setShowForm(false);
+    setOpen(false);
+  };
+
   const createPlaylist = async (name: string, description: string) => {
     const playlistData = data[range];
     if (name) {
@@ -147,7 +151,7 @@ export default function TopArtists({ artists, timeSpans, token, id, username }: 
         initial={false}
         animate={{ background: `linear-gradient(180deg, ${color} 10%, #121212 100%)` }}
       />
-      <Backdrop show={showForm || open} onClick={setShowForm} />
+      <Backdrop show={showForm || open} onClick={backdropHandler} />
       <div className={styles.header}>
         <Cover
           cover={data[range][0].images[0].url}

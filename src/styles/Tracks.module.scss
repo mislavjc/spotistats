@@ -108,6 +108,9 @@
         font-weight: $medium;
       }
     }
+    &__skeleton {
+      margin: 0 auto;
+    }
   }
   .pageTitle {
     font-size: 3rem;

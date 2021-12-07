@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import styles from '@/styles/Landing.module.scss';
 import Button from '@/components/Button/Button';
+
+import styles from '@/styles/Landing.module.scss';
 
 export default function Home() {
   const router = useRouter();

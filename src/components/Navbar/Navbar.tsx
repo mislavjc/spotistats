@@ -5,11 +5,13 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { menuVariants, textVariants } from '@/lib/framer';
+import { useStoreUser } from '@/hooks/swr';
 
 import styles from './Navbar.module.scss';
 
 
 const Navbar = () => {
+  useStoreUser();
   const { data: session, status } = useSession();
   const [showMenu, setShowMenu] = useState(false);
 

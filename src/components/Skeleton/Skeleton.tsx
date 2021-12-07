@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Skeleton: FC<Props> = ({ size, autoSize = false }) => (
-  <div
+  <span
     className={`${styles.skeleton} ${autoSize ? styles.autoSize : ''}`}
     style={{ width: size?.width, height: size?.height }}
   />

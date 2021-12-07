@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const getSpotifyData = async (url: string, token: string | undefined) => {
+export const getSpotifyData = async (url: string, token: string | string[]) => {
   const { data } = await axios.get(`https://api.spotify.com/v1${url}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -21,7 +21,7 @@ export const postSpotifyData = async (url: string, token: string, data: object) 
   return res;
 };
 
-export const getArtistData = async (id: string | undefined, token: string | undefined) => {
+export const getArtistData = async (id: string | undefined, token: string | string[]) => {
   const { data: res } = await axios.get(`https://api.spotify.com/v1/artists/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,

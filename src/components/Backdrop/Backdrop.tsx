@@ -7,7 +7,7 @@ import styles from './Backdrop.module.scss';
 
 interface Props {
   show: boolean;
-  onClick: Dispatch<SetStateAction<boolean>>;
+  onClick: () => void;
 }
 
 const Backdrop: FunctionComponent<Props> = ({ show, onClick }) => (
@@ -19,7 +19,7 @@ const Backdrop: FunctionComponent<Props> = ({ show, onClick }) => (
         animate="visible"
         exit="exit"
         className={styles.backdrop}
-        onClick={() => onClick(!show)}
+        onClick={onClick}
       />
     )}
   </AnimatePresence>
