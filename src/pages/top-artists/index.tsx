@@ -21,6 +21,7 @@ import { getSpotifyData } from '@/lib/http';
 import { ArtistProps, Artists } from '@/types/artist-types';
 
 import styles from '@/styles/Artists.module.scss';
+import Skeleton from '@/components/Skeleton/Skeleton';
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const session: any = await getSession(context);
