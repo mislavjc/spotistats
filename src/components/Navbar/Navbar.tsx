@@ -12,6 +12,7 @@ import styles from './Navbar.module.scss';
 
 const Navbar = () => {
   useStoreUser();
+
   const { data: session, status } = useSession();
   const [showMenu, setShowMenu] = useState(false);
 

@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 import { useStore } from '@/lib/store';
 
@@ -68,4 +69,15 @@ export const useStoreUser = () => {
   }, [authUser]);
 
   return user;
+};
+
+export const useAuthGuard = () => {
+  const { user } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !user) {
+      router.push('/auth/signin');
+    }
+  }, [user]);
 };

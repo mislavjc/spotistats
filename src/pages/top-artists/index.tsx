@@ -17,12 +17,14 @@ import { cardVariants } from '@/lib/framer';
 import { getTimeSpans, numFormatter } from '@/lib/utils';
 
 import styles from '@/styles/Artists.module.scss';
-import { useArtists, useStoreUser } from '@/hooks/swr';
+import { useArtists, useAuthGuard, useStoreUser } from '@/hooks/swr';
 import { Item } from '@/types/artist-types';
 
 const timeSpans = getTimeSpans('tracks');
 
 export default function TopArtists() {
+  useAuthGuard();
+
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState('');
