@@ -7,7 +7,7 @@
       "@/*": ["*"],
       "@/api/*": ["pages/api/*"]
     },
-    "types": ["@peeky/test"],
+    "types": ["@types/jest"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -27,6 +27,6 @@
     "**/*.tsx",
     "src/pages/auth/signin/index.tsx",
     "src/pages/_document.tsx"
-  ],
+, "babel.config.js"  ],
   "exclude": ["node_modules"]
 }
