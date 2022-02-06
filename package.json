@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest src",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "prepare": "husky install"
   },
   "volta": {
     "node": "14.18.2",
@@ -34,8 +35,9 @@
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.15",
     "@types/react": "^17.0.39",
-    "eslint": "8.8.0",
+    "eslint": "7.32.0",
     "eslint-config-next": "12.0.10",
+    "husky": "^7.0.0",
     "jest": "^27.5.0",
     "ts-jest": "^27.1.3",
     "typescript": "^4.5.5"
