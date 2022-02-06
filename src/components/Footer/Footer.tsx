@@ -36,7 +36,7 @@ const Footer = () => (
         </div>
       </div>
       <div>
-        <h2>Spotistats &copy;2021</h2>
+        <h2>Spotistats &copy;{new Date().getFullYear()}</h2>
       </div>
     </footer>
   </div>
