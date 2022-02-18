@@ -3,7 +3,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getColor } from '@/lib/utils';
 import { getSpotifyData, getArtistData } from '@/lib/http';
 import { Tracks } from '@/types/track-types';
-import { TimeSpan } from '@/types/shared-types';
 
 type Data = {
   tracks: Tracks;
