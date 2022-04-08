@@ -21,7 +21,7 @@ import {
   getTimeSpans,
 } from '@/lib/utils';
 import { cardVariants } from '@/lib/framer';
-import { useTracks, useStoreUser, useAuthGuard } from '@/hooks/swr';
+import { useTracks, useStoreUser } from '@/hooks/swr';
 
 import { Artist, Item } from '@/types/track-types';
 
@@ -30,8 +30,6 @@ import styles from '@/styles/Tracks.module.scss';
 const timeSpans = getTimeSpans('artists');
 
 export default function TopTracks() {
-  useAuthGuard();
-
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState('');
