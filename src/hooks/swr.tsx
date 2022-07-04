@@ -4,19 +4,10 @@ import { useEffect } from 'react';
 
 import { useStore } from '@/lib/store';
 
+import { User } from '@/types';
+
 // @ts-ignore
 const fetcher = (...args) => fetch(...args).then(res => res.json());
-
-interface User {
-  name: string;
-  picture: string;
-  sub: string;
-  id: string;
-  accessToken: string;
-  expires: number;
-  iat: number;
-  jti: string;
-}
 
 export const useUser = () => {
   const { data, status } = useSession({
