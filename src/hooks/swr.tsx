@@ -21,6 +21,7 @@ interface User {
 export const useUser = () => {
   const { data, status } = useSession({
     required: true,
+    onUnauthenticated() {},
   });
 
   return {
