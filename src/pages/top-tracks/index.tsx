@@ -1,6 +1,3 @@
-import axios from 'axios';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -22,6 +19,7 @@ import {
 } from '@/lib/utils';
 import { cardVariants } from '@/lib/framer';
 import { useTracks, useStoreUser } from '@/hooks/swr';
+import { usePlaylist, useRange } from '@/hooks';
 
 import { Artist, Item } from '@/types/track-types';
 
@@ -30,63 +28,31 @@ import styles from '@/styles/Tracks.module.scss';
 const timeSpans = getTimeSpans('artists');
 
 export default function TopTracks() {
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
-  const [url, setUrl] = useState('');
-  const [showForm, setShowForm] = useState(false);
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [selected, setSelected] = useState(timeSpans[0].span);
-  const [pathTop, setPathTop] = useState(timeSpans[0].pathTop);
-  const [pathBottom, setPathBottom] = useState(timeSpans[0].pathBottom);
-  const [playlistTitle, setPlaylistTitle] = useState('');
-  const [range, setRange] = useState(timeSpans[0].span);
-  const [error, setError] = useState(false);
+  const { selected, setSelected, pathTop, pathBottom, range, handleClick } = useRange(
+    'tracks',
+    timeSpans,
+  );
 
   const user = useStoreUser();
+
+  const {
+    createPlaylist,
+    backdropHandler,
+    error,
+    name,
+    setName,
+    description,
+    setDescription,
+    open,
+    showForm,
+    setShowForm,
+    playlistTitle,
+    url,
+  } = usePlaylist('tracks');
 
   const { tracks, color, cover, isLoading } = useTracks(
     user.accessToken ? `${range}/${user?.accessToken}` : null,
   );
-
-  const handleClick = (range: string, index: number) => {
-    if (range === 'artists') {
-      router.push('/top-artists');
-    } else {
-      setRange(range);
-      setPathTop(timeSpans[index].pathTop);
-      setPathBottom(timeSpans[index].pathBottom);
-    }
-  };
-
-  const backdropHandler = () => {
-    setShowForm(false);
-    setOpen(false);
-  };
-
-  const createPlaylist = async (name: string, description: string) => {
-    const playlistData: Item[] = tracks;
-    if (name) {
-      axios
-        .post('/api/create-playlist', {
-          id: user?.id,
-          token: user?.accessToken,
-          playlistData,
-          name,
-          description,
-        })
-        .then(res => {
-          setOpen(true);
-          setShowForm(false);
-          setPlaylistTitle(name);
-          setName('');
-          setDescription('');
-          setUrl(res.data);
-        });
-    } else {
-      setError(true);
-    }
-  };
 
   return (
     <div style={{ position: 'relative' }}>
@@ -161,10 +127,10 @@ export default function TopTracks() {
             <Chip
               key={time.span}
               onClick={() => {
-                setSelected(time.span);
+                setSelected(time);
                 handleClick(time.span, index);
               }}
-              selected={selected === time.span}
+              selected={selected === time}
               layoutId="chip-container"
               spaced
               capitalized
@@ -251,7 +217,11 @@ export default function TopTracks() {
             fullWidth
           />
           <div className="button__container">
-            <Button color="secondary" size="sm" onClick={() => createPlaylist(name, description)}>
+            <Button
+              color="secondary"
+              size="sm"
+              onClick={() => createPlaylist({ name, description, playlistData: tracks, user })}
+            >
               Create
             </Button>
           </div>

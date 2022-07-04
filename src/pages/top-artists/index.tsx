@@ -1,8 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import axios from 'axios';
 
 import Backdrop from '@/components/Backdrop/Backdrop';
 import Button from '@/components/Button/Button';
@@ -15,71 +12,44 @@ import SkeletonTable from '@/components/Skeleton/SkeletonTable';
 
 import { cardVariants } from '@/lib/framer';
 import { getTimeSpans, numFormatter } from '@/lib/utils';
+import { usePlaylist, useRange } from '@/hooks';
+import { useArtists, useStoreUser } from '@/hooks/swr';
 
 import styles from '@/styles/Artists.module.scss';
-import { useArtists, useStoreUser } from '@/hooks/swr';
 import { Item } from '@/types/artist-types';
 
 const timeSpans = getTimeSpans('tracks');
 
 export default function TopArtists() {
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
-  const [url, setUrl] = useState('');
-  const [showForm, setShowForm] = useState(false);
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [selected, setSelected] = useState(timeSpans[0]);
-  const [pathTop, setPathTop] = useState(timeSpans[0].pathTop);
-  const [pathBottom, setPathBottom] = useState(timeSpans[0].pathBottom);
-  const [playlistTitle, setPlaylistTitle] = useState('');
-  const [range, setRange] = useState(timeSpans[0].span);
-  const [error, setError] = useState(false);
+  const {
+    selected,
+    setSelected,
+    pathTop,
+    pathBottom,
+    range,
+    handleClick,
+  } = useRange('artists', timeSpans);
+
+  const {
+    createPlaylist,
+    backdropHandler,
+    error,
+    name,
+    setName,
+    description,
+    setDescription,
+    open,
+    showForm,
+    setShowForm,
+    playlistTitle,
+    url,
+  } = usePlaylist('artists');
 
   const user = useStoreUser();
 
   const { artists, color, cover, isLoading } = useArtists(
     user.accessToken ? `${range}/${user?.accessToken}` : null,
   );
-
-  const handleClick = (range: string, index: number) => {
-    if (range === 'tracks') {
-      router.push('/top-tracks');
-    } else {
-      setRange(range);
-      setPathTop(timeSpans[index].pathTop);
-      setPathBottom(timeSpans[index].pathBottom);
-    }
-  };
-
-  const backdropHandler = () => {
-    setShowForm(false);
-    setOpen(false);
-  };
-
-  const createPlaylist = async (name: string, description: string) => {
-    const playlistData = artists;
-    if (name) {
-      axios
-        .post('/api/create-artist-playlist', {
-          id: user?.id,
-          token: user?.accessToken,
-          playlistData,
-          name,
-          description,
-        })
-        .then(res => {
-          setOpen(true);
-          setShowForm(false);
-          setPlaylistTitle(name);
-          setName('');
-          setDescription('');
-          setUrl(res.data);
-        });
-    } else {
-      setError(true);
-    }
-  };
 
   return (
     <>
@@ -228,7 +198,11 @@ export default function TopArtists() {
             fullWidth
           />
           <div className="button__container">
-            <Button color="secondary" size="sm" onClick={() => createPlaylist(name, description)}>
+            <Button
+              color="secondary"
+              size="sm"
+              onClick={() => createPlaylist({ name, description, playlistData: artists, user })}
+            >
               Create
             </Button>
           </div>

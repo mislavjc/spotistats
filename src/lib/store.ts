@@ -1,5 +1,8 @@
 import createStore from 'teaful';
 
+import { User } from '@/types';
+
+
 const initialStore = {
   user: {
     id: null,
@@ -10,6 +13,6 @@ const initialStore = {
     jti: null,
     sub: null,
     accessToken: null,
-  },
+  } as User,
 };
 export const { useStore, getStore } = createStore(initialStore);
