@@ -31,6 +31,9 @@ export default NextAuth({
         user: token,
         expires: new Date(Date.now() + 1000 * 60 * 30),
       }),
+    async redirect({ baseUrl }) {
+      return baseUrl;
+    },
   },
   secret: process.env.SECRET,
   session: {

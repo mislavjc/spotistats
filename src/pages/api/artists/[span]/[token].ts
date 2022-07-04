@@ -14,7 +14,7 @@ const getArtistsHandler = async (req: NextApiRequest, res: NextApiResponse<Data>
   if (req.method === 'GET') {
     const { span, token } = req.query;
 
-    const artists = await getSpotifyData(`/me/top/artists?time_range=${span}&limit=30`, token);
+    const artists = await getSpotifyData(`/me/top/artists?time_range=${span}&limit=30`, token!);
     const color = await getColor(artists[0].images[0].url);
     const cover = artists[0].images[1].url;
 
