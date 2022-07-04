@@ -1,14 +1,6 @@
-const withPWA = require('next-pwa');
-
-module.exports = withPWA({
+module.exports = {
   reactStrictMode: true,
   images: {
     domains: ['i.scdn.co', 'platform-lookaside.fbsbx.com'],
   },
-  pwa: {
-    dest: 'public',
-    register: true,
-    skipWaiting: true,
-    disable: process.env.NODE_ENV === 'development',
-  },
-});
+};
