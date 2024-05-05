@@ -28,7 +28,7 @@ const Cover: FC<Props> = ({ cover, color, path, text }) => (
         </svg>
       </div>
       <div>
-        <Image src={cover} alt="cover image" height={250} width={250} />
+        <Image src={cover} alt="cover image" height={250} width={250} unoptimized />
       </div>
       <div className={styles.wave__bottom}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">

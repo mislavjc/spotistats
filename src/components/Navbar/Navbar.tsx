@@ -50,6 +50,7 @@ const Navbar = () => {
                   width={40}
                   height={40}
                   alt="user profile picture"
+                  unoptimized
                 />
                 <h3>Profile</h3>
               </div>
